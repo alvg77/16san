@@ -57,7 +57,7 @@ public class User {
     private List<Post> posts;
 
     @OneToMany(mappedBy = "user")
-    private List<Thread> threads;
+    private List<DiscussionThread> discussionThreads;
 
     @OneToMany(mappedBy = "user")
     private List<Moderator> moderators;

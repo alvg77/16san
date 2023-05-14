@@ -1,14 +1,14 @@
 package com.ssan.api16san.entity;
 
-import com.ssan.api16san.entity.report.ThreadReport;
+import com.ssan.api16san.entity.report.DiscussionThreadReport;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
-@Entity(name = "thread")
+@Entity(name = "discussion_thread")
 @Data
-public class Thread {
+public class DiscussionThread {
     @Id
     @GeneratedValue
     @Column(
@@ -40,9 +40,9 @@ public class Thread {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @OneToMany(mappedBy = "thread")
+    @OneToMany(mappedBy = "discussionThread")
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "thread")
-    private List<ThreadReport> reports;
+    @OneToMany(mappedBy = "discussionThread")
+    private List<DiscussionThreadReport> reports;
 }

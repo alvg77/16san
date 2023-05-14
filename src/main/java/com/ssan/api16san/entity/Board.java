@@ -46,7 +46,7 @@ public class Board {
     private List<Moderator> moderators;
 
     @OneToMany(mappedBy = "board")
-    private List<Thread> threads;
+    private List<DiscussionThread> discussionThreads;
 
     @OneToMany(mappedBy = "board")
     private List<Ban> bans;

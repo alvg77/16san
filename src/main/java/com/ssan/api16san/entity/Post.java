@@ -1,7 +1,6 @@
 package com.ssan.api16san.entity;
 
 import com.ssan.api16san.entity.report.PostReport;
-import com.ssan.api16san.entity.report.Report;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -38,8 +37,8 @@ public class Post {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "thread_id")
-    private Thread thread;
+    @JoinColumn(name = "discussion_thread_id")
+    private DiscussionThread discussionThread;
 
     @OneToMany(mappedBy = "post")
     private List<Upvote> upvotes;

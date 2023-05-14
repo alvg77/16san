@@ -1,12 +1,12 @@
 package com.ssan.api16san.entity.report;
 
-import com.ssan.api16san.entity.Thread;
+import com.ssan.api16san.entity.DiscussionThread;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity(name = "thread_report")
 @Data
-public class ThreadReport extends Report {
+public class DiscussionThreadReport extends Report {
     @Id
     @GeneratedValue
     @Column(
@@ -17,6 +17,6 @@ public class ThreadReport extends Report {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "thread_id")
-    private Thread thread;
+    @JoinColumn(name = "discussion_thread_id")
+    private DiscussionThread discussionThread;
 }
