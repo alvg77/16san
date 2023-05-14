@@ -1,32 +1,49 @@
 package com.ssan.api16san.entity;
 
+import com.ssan.api16san.entity.report.PostReport;
+import com.ssan.api16san.entity.report.Report;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "post")
 @Data
 public class Post {
     @Id
     @GeneratedValue
+    @Column(
+            name = "id",
+            updatable = false
+    )
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "thread")
-    private Thread thread;
-
+    @Column(
+            name = "content",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "user")
-    private User author;
+    @Column(
+            name = "created_at",
+            nullable = false,
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+    )
+    private Date createdAt;
 
-
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "thread_id")
+    private Thread thread;
 
     @OneToMany(mappedBy = "post")
     private List<Upvote> upvotes;
+
+    @OneToMany(mappedBy = "post")
+    private List<PostReport> reports;
 }

@@ -1,36 +1,69 @@
 package com.ssan.api16san.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name="user") // maps this class to an sql table named "User"
 @Data
+@Table(
+        name = "user",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "user_username_unique", columnNames = "username"),
+                @UniqueConstraint(name = "user_email_unique", columnNames = "email")
+        }
+)
 public class User {
-    @Id
-    @GeneratedValue
+    @Id // marks this field as the primary key for the table
+    @GeneratedValue // tells the database to generate this value
+    @Column(
+            name = "id",
+            updatable = false,
+            nullable = false
+    )
     private Long id;
+
+    @Column(
+            name = "username",
+            nullable = false,
+            columnDefinition = "VARCHAR(45)"
+    )
     private String username;
-    private String password;
+
+    @Column(
+            name = "email",
+            nullable = false,
+            columnDefinition = "VARCHAR(250)"
+    )
     private String email;
+
+    @Column(
+            name = "password",
+            nullable = false,
+            columnDefinition = "VARCHAR(45)"
+    )
+    private String password;
+
+    @Column(
+            name = "created",
+            nullable = false,
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+    )
     private Date created;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user") // which field in the Post class maps to this field
     private List<Post> posts;
 
     @OneToMany(mappedBy = "user")
-    private List<Moderator> moderations;
+    private List<Thread> threads;
+
+    @OneToMany(mappedBy = "user")
+    private List<Moderator> moderators;
 
     @OneToMany(mappedBy = "user")
     private List<Ban> bans;
-
-    @OneToMany(mappedBy = "user")
-    private List<Thread> threads;
 
     @OneToMany(mappedBy = "user")
     private List<Upvote> upvotes;

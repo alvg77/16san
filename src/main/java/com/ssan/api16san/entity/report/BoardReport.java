@@ -1,25 +1,20 @@
-package com.ssan.api16san.entity;
+package com.ssan.api16san.entity.report;
 
+import com.ssan.api16san.entity.Board;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
-@Entity(name = "moderator")
+@Entity(name = "board_report")
 @Data
-public class Moderator {
+public class BoardReport extends Report {
     @Id
     @GeneratedValue
     @Column(
-        name = "moderator_id",
+        name = "board_report_id",
         nullable = false,
         updatable = false
     )
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @ManyToOne
     @JoinColumn(name = "board_id")

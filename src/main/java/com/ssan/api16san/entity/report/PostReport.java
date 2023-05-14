@@ -1,15 +1,16 @@
-package com.ssan.api16san.entity;
+package com.ssan.api16san.entity.report;
 
+import com.ssan.api16san.entity.Post;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity(name = "upvote")
+@Entity(name = "post_report")
 @Data
-public class Upvote {
+public class PostReport extends Report {
     @Id
     @GeneratedValue
-    @Column (
-        name = "upvote_id",
+    @Column(
+        name = "post_report_id",
         nullable = false,
         updatable = false
     )
@@ -18,10 +19,4 @@ public class Upvote {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
 }
-
