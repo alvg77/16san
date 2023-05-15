@@ -1,6 +1,5 @@
 package com.ssan.api16san.entity;
 
-import com.ssan.api16san.entity.report.PostReport;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -42,7 +41,4 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<Upvote> upvotes;
-
-    @OneToMany(mappedBy = "post")
-    private List<PostReport> reports;
 }

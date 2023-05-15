@@ -1,6 +1,5 @@
 package com.ssan.api16san.entity;
 
-import com.ssan.api16san.entity.report.DiscussionThreadReport;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -36,13 +35,7 @@ public class DiscussionThread {
     @JoinColumn(name = "user_id") // foreign key
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "board_id")
-    private Board board;
-
     @OneToMany(mappedBy = "discussionThread")
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "discussionThread")
-    private List<DiscussionThreadReport> reports;
 }

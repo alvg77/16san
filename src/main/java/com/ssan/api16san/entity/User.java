@@ -3,6 +3,7 @@ package com.ssan.api16san.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,4 +68,10 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Upvote> upvotes;
+
+    @ManyToMany
+    @JoinTable(name = "user_community_boards",
+            joinColumns = @JoinColumn(name = "user_id"))
+    private List<CommunityBoard> communityBoards = new ArrayList<>();
+
 }

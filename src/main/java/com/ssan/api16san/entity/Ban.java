@@ -38,10 +38,6 @@ public class Ban {
     private String reason;
 
     @ManyToOne
-    @JoinColumn(name = "board_id")
-    private Board board;
-
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 }
