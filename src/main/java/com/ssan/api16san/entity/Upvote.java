@@ -9,7 +9,7 @@ public class Upvote {
     @Id
     @GeneratedValue
     @Column (
-        name = "upvote_id",
+        name = "id",
         nullable = false,
         updatable = false
     )
@@ -22,6 +22,5 @@ public class Upvote {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
-
 }
 

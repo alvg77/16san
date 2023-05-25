@@ -31,6 +31,19 @@ public class DiscussionThread {
     )
     private String content;
 
+    @Column(
+            name = "created_at",
+            nullable = false,
+            columnDefinition = "DATETIME"
+    )
+    private String createdAt;
+
+    @Column(
+            name = "valid_until",
+            columnDefinition = "DATETIME"
+    )
+    private String validUntil;
+
     @ManyToOne
     @JoinColumn(name = "user_id") // foreign key
     private User user;

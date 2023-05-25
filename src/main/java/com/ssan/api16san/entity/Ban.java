@@ -11,7 +11,7 @@ public class Ban {
     @Id
     @GeneratedValue
     @Column(
-        name = "ban_id",
+        name = "id",
         nullable = false,
         updatable = false
     )

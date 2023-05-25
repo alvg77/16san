@@ -11,7 +11,7 @@ public class Moderator {
     @Id
     @GeneratedValue
     @Column(
-        name = "moderator_id",
+        name = "id",
         nullable = false,
         updatable = false
     )
