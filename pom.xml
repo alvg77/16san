@@ -84,8 +84,8 @@
                             <version>${lombok-mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
-                    <source>19</source>
-                    <target>19</target>
+                    <source>20</source>
+                    <target>20</target>
                 </configuration>
             </plugin>
         </plugins>

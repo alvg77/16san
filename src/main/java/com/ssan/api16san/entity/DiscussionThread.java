@@ -3,6 +3,7 @@ package com.ssan.api16san.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity(name = "discussion_thread")
@@ -42,11 +43,15 @@ public class DiscussionThread {
             name = "valid_until",
             columnDefinition = "DATETIME"
     )
-    private String validUntil;
+    private LocalDateTime validUntil;
 
     @ManyToOne
     @JoinColumn(name = "user_id") // foreign key
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "community_board_id")
+    private CommunityBoard board;
 
     @OneToMany(mappedBy = "discussionThread")
     private List<Post> posts;

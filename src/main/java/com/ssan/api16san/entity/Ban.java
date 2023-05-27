@@ -1,9 +1,11 @@
 package com.ssan.api16san.entity;
 
+import com.ssan.api16san.controller.resources.CommunityBoardResource;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.mapstruct.Mapping;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Entity(name = "ban")
 @Data
@@ -22,13 +24,13 @@ public class Ban {
         nullable = false,
         columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     )
-    private LocalTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column(
         name = "expires_at",
         columnDefinition = "DATETIME"
     )
-    private LocalTime expiresAt;
+    private LocalDateTime expiresAt;
 
     @Column(
         name = "reason",
@@ -40,4 +42,8 @@ public class Ban {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "community_board_id")
+    private CommunityBoard board;
 }

@@ -34,7 +34,7 @@ public class CommunityBoard {
     @Column(
             name = "board_description",
             nullable = false,
-            columnDefinition = "Text"
+            columnDefinition = "VARCHAR(1000)"
     )
     private String description;
 
@@ -48,4 +48,13 @@ public class CommunityBoard {
     )
     @JsonIgnore
     private List<User> users;
+
+    @OneToMany(mappedBy = "board")
+    private List<Moderator> moderators;
+
+    @OneToMany(mappedBy = "board")
+    private List<DiscussionThread> threads;
+
+    @OneToMany(mappedBy = "board")
+    private List<Ban> bans;
 }

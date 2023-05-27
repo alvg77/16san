@@ -3,8 +3,8 @@ package com.ssan.api16san.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity(name="user") // maps this class to an sql table named "User"
@@ -52,7 +52,7 @@ public class User {
             nullable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     )
-    private Date created;
+    private LocalDateTime created;
 
     @OneToMany(mappedBy = "user") // which field in the Post class maps to this field
     private List<Post> posts;

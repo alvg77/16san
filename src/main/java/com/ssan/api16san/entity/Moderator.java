@@ -3,8 +3,6 @@ package com.ssan.api16san.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Entity(name = "moderator")
 @Data
 public class Moderator {
@@ -21,4 +19,7 @@ public class Moderator {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    private CommunityBoard board;
 }
