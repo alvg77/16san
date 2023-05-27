@@ -49,11 +49,11 @@ public class DiscussionThread {
     @JoinColumn(name = "user_id") // foreign key
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "community_board_id")
-    private CommunityBoard board;
-
     @OneToMany(mappedBy = "discussionThread")
     private List<Post> posts;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "")
+    private Board board;
 
 }

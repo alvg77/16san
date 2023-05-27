@@ -44,6 +44,6 @@ public class Ban {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "community_board_id")
-    private CommunityBoard board;
+    @JoinColumn(name = "board_id")
+    private Board board;
 }

@@ -19,7 +19,9 @@ public class Moderator {
     @JoinColumn(name = "user_id")
     private User user;
 
+
     @ManyToOne
-    @JoinColumn(name = "board_id")
-    private CommunityBoard board;
+    @JoinColumn(name = "")
+    private Board board;
+
 }

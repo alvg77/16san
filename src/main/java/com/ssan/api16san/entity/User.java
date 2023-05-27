@@ -72,6 +72,6 @@ public class User {
     @ManyToMany
     @JoinTable(name = "user_community_boards",
             joinColumns = @JoinColumn(name = "user_id"))
-    private List<CommunityBoard> communityBoards = new ArrayList<>();
+    private List<Board> boards = new ArrayList<>();
 
 }

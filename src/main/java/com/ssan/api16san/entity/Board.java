@@ -6,15 +6,15 @@ import lombok.Data;
 
 import java.util.List;
 
-@Entity(name="community_board") // maps this class to an sql table named "User"
+@Entity(name="board")
 @Data
 @Table(
-        name = "community_board",
+        name = "board",
         uniqueConstraints = {
-                @UniqueConstraint(name = "board_name_unique", columnNames = "board_name"),
+                @UniqueConstraint(name = "board_name_unique", columnNames = "name"),
         }
 )
-public class CommunityBoard {
+public class Board {
     @Id
     @GeneratedValue
     @Column(
@@ -25,29 +25,18 @@ public class CommunityBoard {
     private Long id;
 
     @Column(
-            name = "board_name",
+            name = "name",
             nullable = false,
             columnDefinition = "VARCHAR(45)"
     )
     private String name;
 
     @Column(
-            name = "board_description",
+            name = "description",
             nullable = false,
             columnDefinition = "VARCHAR(1000)"
     )
     private String description;
-
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "communityBoards"
-    )
-    @JsonIgnore
-    private List<User> users;
 
     @OneToMany(mappedBy = "board")
     private List<Moderator> moderators;
@@ -57,4 +46,15 @@ public class CommunityBoard {
 
     @OneToMany(mappedBy = "board")
     private List<Ban> bans;
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "boards"
+    )
+    @JsonIgnore
+    private List<User> users;
 }
