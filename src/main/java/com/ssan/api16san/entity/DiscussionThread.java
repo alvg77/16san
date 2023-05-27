@@ -52,8 +52,7 @@ public class DiscussionThread {
     @OneToMany(mappedBy = "discussionThread")
     private List<Post> posts;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "")
+    @ManyToOne
+    @JoinColumn(name = "board_id")
     private Board board;
-
 }

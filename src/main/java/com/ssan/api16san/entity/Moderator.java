@@ -21,7 +21,7 @@ public class Moderator {
 
 
     @ManyToOne
-    @JoinColumn(name = "")
+    @JoinColumn(name = "board_id")
     private Board board;
 
 }
