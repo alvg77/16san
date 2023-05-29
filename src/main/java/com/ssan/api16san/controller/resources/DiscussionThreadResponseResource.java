@@ -1,4 +1,4 @@
-package com.ssan.api16san.controller.resources.discussion_thread;
+package com.ssan.api16san.controller.resources;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

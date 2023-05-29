@@ -1,14 +1,14 @@
-package com.ssan.api16san.controller.resources.user;
+package com.ssan.api16san.controller.resources;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequestResource {
-    private String username;
+@NoArgsConstructor
+public class LoginRequestResource {
     private String email;
     private String password;
 }

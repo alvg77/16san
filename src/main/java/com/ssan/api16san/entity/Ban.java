@@ -1,9 +1,7 @@
 package com.ssan.api16san.entity;
 
-import com.ssan.api16san.controller.resources.CommunityBoardResource;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.mapstruct.Mapping;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

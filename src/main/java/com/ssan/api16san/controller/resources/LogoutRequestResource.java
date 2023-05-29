@@ -1,4 +1,4 @@
-package com.ssan.api16san.controller.resources.user;
+package com.ssan.api16san.controller.resources;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LogoutRequestResource {
+    private String email;
 
 }
