@@ -6,11 +6,14 @@ import com.ssan.api16san.entity.Upvote;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper
 public interface PostMapper {
+
+    PostMapper MAPPER = Mappers.getMapper(PostMapper.class);
 
     @Mapping(target = "threadId", source = "discussionThread.id")
     @Mapping(target = "creatorName", source = "user.username")

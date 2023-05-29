@@ -22,7 +22,6 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponseResource login(LoginRequestResource loginData) {
         User user = userRepository.findByEmail(loginData.getEmail()).orElseThrow();
 
-        // add security and check password
 
         return new AuthResponseResource(user.getUsername(), user.getEmail());
     }

@@ -30,11 +30,6 @@ public class BanServiceImpl implements BanService {
         return MAPPER.toBanResource(banRepository.findById(id).orElseThrow());
     }
 
-    public BanResource update(BanResource banResource) {
-        Ban banEntity = banRepository.update(banResource.getReason(), banResource.getExpiresAt(), banResource.getId()).orElseThrow();
-        return MAPPER.toBanResource(banEntity);
-    }
-
     public void delete(Long id) {
         banRepository.deleteById(id);
     }
