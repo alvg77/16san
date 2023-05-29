@@ -2,6 +2,7 @@ package com.ssan.api16san.mapper;
 
 import com.ssan.api16san.controller.resources.PostResource;
 import com.ssan.api16san.entity.Post;
+import com.ssan.api16san.entity.Upvote;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,10 +13,17 @@ import java.util.List;
 public interface PostMapper {
 
     @Mapping(target = "threadId", source = "discussionThread.id")
+    @Mapping(target = "creatorName", source = "user.username")
+    @Mapping(target = "upvoteCount", expression = "java(getUpvoteCount(post.getUpvotes()))")
     PostResource toPostResource(Post post);
 
-    @InheritInverseConfiguration
+    @Mapping(target = "discussionThread.id", source = "threadId")
+    @Mapping(target = "user.username", source = "creatorName")
     Post fromPostResource(PostResource postResource);
+
+    default Integer getUpvoteCount(List<Upvote> upvoteList) {
+        return upvoteList.size();
+    }
 
     List<PostResource> toPostResourceList(List<Post> postList);
 }

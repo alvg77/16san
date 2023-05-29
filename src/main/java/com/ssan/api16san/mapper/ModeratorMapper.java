@@ -5,13 +5,21 @@ import com.ssan.api16san.entity.Moderator;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper
 public interface ModeratorMapper {
-    @Mapping(target = "userId", source = "user.id")
-    @Mapping(target = "boardId", source = "board.id")
+    ModeratorMapper MAPPER = Mappers.getMapper(ModeratorMapper.class);
+
+
+    @Mapping(target = "username", source = "user.username")
+    @Mapping(target = "boardName", source = "board.name")
     ModeratorResource toModeratorResource(Moderator moderator);
 
     @InheritInverseConfiguration
     Moderator fromModeratorResource(ModeratorResource moderatorResource);
+
+    List<ModeratorResource> toModeratorResourceList(List<Moderator> moderatorList);
 }

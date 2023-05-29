@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface UpvoteMapper {
     UpvoteMapper MAPPER = Mappers.getMapper(UpvoteMapper.class);
@@ -17,4 +19,6 @@ public interface UpvoteMapper {
 
     @InheritInverseConfiguration
     Upvote fromUpvoteResource(UpvoteResource upvoteResource);
+
+    List<UpvoteResource> getUpvoteResourceList(List<Upvote> upvoteList);
 }

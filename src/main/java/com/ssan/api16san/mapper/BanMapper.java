@@ -13,8 +13,8 @@ import java.util.List;
 public interface BanMapper {
     BanMapper MAPPER = Mappers.getMapper(BanMapper.class);
 
-    @Mapping(target = "userId", source = "user.id")
-    @Mapping(target = "boardId", source = "board.id")
+    @Mapping(target = "username", source = "user.username")
+    @Mapping(target = "boardName", source = "board.name")
     BanResource toBanResource(Ban ban);
 
     @InheritInverseConfiguration
