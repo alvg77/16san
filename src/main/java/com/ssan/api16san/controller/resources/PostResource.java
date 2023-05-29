@@ -16,4 +16,5 @@ public class PostResource {
     private String creatorName;
     private Instant createdAt;
     private Long threadId;
+    private Integer upvoteCount;
 }

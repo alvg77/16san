@@ -16,9 +16,7 @@ public class DiscussionThreadResponseResource {
     private String content;
     private String creatorName;
     private String boardName;
-    private Integer upvoteCount;
     private Integer postCount;
     private Instant createdAt;
     private LocalDateTime validUntil;
-    private boolean upvoted;
 }

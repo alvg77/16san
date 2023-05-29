@@ -3,6 +3,7 @@ package com.ssan.api16san.mapper;
 import com.ssan.api16san.controller.resources.DiscussionThreadRequestResource;
 import com.ssan.api16san.controller.resources.DiscussionThreadResponseResource;
 import com.ssan.api16san.entity.DiscussionThread;
+import com.ssan.api16san.entity.Post;
 import com.ssan.api16san.entity.Upvote;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -23,7 +24,7 @@ public interface DiscussionThreadMapper {
     @Mapping(target = "postCount", expression = "java(getPostCount(discussionThread.getPosts()))")
     DiscussionThreadResponseResource toDiscussionThreadResponseResource(DiscussionThread discussionThread);
 
-    default Integer getPostCount(List<Upvote> postList) {
+    default Integer getPostCount(List<Post> postList) {
         return postList.size();
     }
 

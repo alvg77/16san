@@ -10,6 +10,6 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class ModeratorResource {
     private Long id;
-    private Long userName;
+    private Long username;
     private String boardName;
 }
