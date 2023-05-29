@@ -3,6 +3,7 @@ package com.ssan.api16san.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class DiscussionThread {
             nullable = false,
             columnDefinition = "DATETIME"
     )
-    private String createdAt;
+    private Instant createdAt;
 
     @Column(
             name = "valid_until",

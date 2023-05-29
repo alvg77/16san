@@ -1,7 +1,8 @@
 package com.ssan.api16san.mapper;
 
-import com.ssan.api16san.controller.resources.DiscussionThreadResource;
+import com.ssan.api16san.controller.resources.discussion_thread.DiscussionThreadRequestResource;
 import com.ssan.api16san.entity.DiscussionThread;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -9,9 +10,9 @@ import org.mapstruct.Mapping;
 public interface DiscussionThreadMapper {
 
     @Mapping(target = "boardId", source = "board.id")
-    DiscussionThreadResource toDiscussionThreadResource(DiscussionThread discussionThread);
+    DiscussionThreadRequestResource toDiscussionThreadResource(DiscussionThread discussionThread);
 
-    @Mapping(target = "board.id", source = "boardId")
-    DiscussionThread fromDiscussionThreadResource(DiscussionThreadResource discussionThreadResource);
+    @InheritInverseConfiguration
+    DiscussionThread fromDiscussionThreadResource(DiscussionThreadRequestResource discussionThreadRequestResource);
 }
 

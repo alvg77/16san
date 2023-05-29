@@ -1,11 +1,13 @@
 package com.ssan.api16san.service.impl;
 
-import com.ssan.api16san.controller.resources.user.UserRequestResource;
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.repository.UserRepository;
 import com.ssan.api16san.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+
+// ADD PASSWORD ENCRYPTION
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +22,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User loginUser(UserRequestResource user) {
         return null;
+    }
+
+    @Override
+    public boolean validatePassword(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        return user.getPassword().equals(password);
     }
 
     @Override

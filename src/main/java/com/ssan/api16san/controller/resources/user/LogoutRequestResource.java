@@ -1,13 +1,14 @@
-package com.ssan.api16san.controller.resources;
+package com.ssan.api16san.controller.resources.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
+// implement after jwt
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpvoteResource {
-    private Long postId;
+public class LogoutRequestResource {
+
 }

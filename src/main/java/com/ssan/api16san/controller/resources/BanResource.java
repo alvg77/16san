@@ -1,22 +1,16 @@
 package com.ssan.api16san.controller.resources;
 
 import lombok.Data;
-import lombok.NonNull;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Locale;
+
 
 @Data
 public class BanResource {
     private Long id;
-    @NonNull
-    private Long userId;
-    @NonNull
-    private Long boardId;
-    @NonNull
+    private Long username;
+    private Long boardName;
     private String reason;
-    @NonNull
+    // format needs to be 2007-12-03T10:15:30
     private LocalDateTime expiresAt;
 }

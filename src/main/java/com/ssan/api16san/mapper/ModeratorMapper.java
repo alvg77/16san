@@ -2,6 +2,7 @@ package com.ssan.api16san.mapper;
 
 import com.ssan.api16san.controller.resources.ModeratorResource;
 import com.ssan.api16san.entity.Moderator;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -11,7 +12,6 @@ public interface ModeratorMapper {
     @Mapping(target = "boardId", source = "board.id")
     ModeratorResource toModeratorResource(Moderator moderator);
 
-    @Mapping(target = "user.id", source = "userId")
-    @Mapping(target = "board.id", source = "boardId")
+    @InheritInverseConfiguration
     Moderator fromModeratorResource(ModeratorResource moderatorResource);
 }

@@ -3,7 +3,7 @@ package com.ssan.api16san.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,11 +48,11 @@ public class User {
     private String password;
 
     @Column(
-            name = "created",
+            name = "created_at",
             nullable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     )
-    private LocalDateTime created;
+    private Instant createdAt;
 
     @OneToMany(mappedBy = "user") // which field in the Post class maps to this field
     private List<Post> posts;

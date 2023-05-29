@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.mapstruct.Mapping;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity(name = "ban")
@@ -24,7 +25,7 @@ public class Ban {
         nullable = false,
         columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     )
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @Column(
         name = "expires_at",

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
 import java.util.List;
 
 @Entity(name="board")
@@ -37,6 +38,13 @@ public class Board {
             columnDefinition = "VARCHAR(1000)"
     )
     private String description;
+
+    @Column(
+            name = "created_at",
+            nullable = false,
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+    )
+    private Instant createdAt;
 
     @OneToMany(mappedBy = "board")
     private List<Moderator> moderators;
