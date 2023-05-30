@@ -22,15 +22,27 @@ public class BanServiceImpl implements BanService {
         return banResource;
     }
 
+    @Override
     public List<BanResource> getAll() {
         return MAPPER.toBanResourceList(banRepository.findAll());
     }
 
+    @Override
     public BanResource get(Long id) {
         return MAPPER.toBanResource(banRepository.findById(id).orElseThrow());
     }
 
+    @Override
     public void delete(Long id) {
         banRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(BanResource banResource) {
+        banRepository.updateReasonAndExpiresAtById(
+                banResource.getReason(),
+                banResource.getExpiresAt(),
+                banResource.getId()
+        );
     }
 }

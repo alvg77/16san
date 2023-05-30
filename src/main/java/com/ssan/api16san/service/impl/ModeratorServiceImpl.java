@@ -17,6 +17,7 @@ import static com.ssan.api16san.mapper.ModeratorMapper.MAPPER;
 public class ModeratorServiceImpl implements ModeratorService {
     private final ModeratorRepository moderatorRepository;
 
+    @Override
     public ModeratorResource save(ModeratorResource moderatorResource) {
         Moderator moderator = moderatorRepository.save(
                 MAPPER.fromModeratorResource(moderatorResource)
@@ -25,19 +26,23 @@ public class ModeratorServiceImpl implements ModeratorService {
         return moderatorResource;
     }
 
+    @Override
     public List<ModeratorResource> getAll() {
         return MAPPER.toModeratorResourceList(
                 moderatorRepository.findAll()
         );
     }
 
+    @Override
     public ModeratorResource get(Long id) {
         return MAPPER.toModeratorResource(
                 moderatorRepository.findById(id).orElseThrow()
         );
     }
 
+    @Override
     public void delete(Long id) {
         moderatorRepository.deleteById(id);
     }
+
 }

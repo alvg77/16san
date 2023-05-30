@@ -10,4 +10,5 @@ public interface BanService {
     List<BanResource> getAll();
     BanResource get(Long id);
     void delete(Long id);
+    void update(BanResource banResource);
 }

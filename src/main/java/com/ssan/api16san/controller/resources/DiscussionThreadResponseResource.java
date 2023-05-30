@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -18,5 +19,5 @@ public class DiscussionThreadResponseResource {
     private String boardName;
     private Integer postCount;
     private Instant createdAt;
-    private LocalDateTime validUntil;
+    private Date validUntil;
 }

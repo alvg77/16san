@@ -10,4 +10,5 @@ public interface BoardService {
     List<BoardResource> getAll();
     BoardResource get(Long id);
     void delete(Long id);
+    void update(BoardResource boardResource);
 }

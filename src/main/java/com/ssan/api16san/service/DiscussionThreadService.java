@@ -10,4 +10,5 @@ public interface DiscussionThreadService {
     List<DiscussionThreadResponseResource> getAll();
     DiscussionThreadResponseResource get(Long id);
     void delete(Long id);
+    void update(DiscussionThreadRequestResource threadRequestResource);
 }

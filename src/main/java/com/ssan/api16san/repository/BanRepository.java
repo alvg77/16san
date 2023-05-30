@@ -8,8 +8,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Repository
 public interface BanRepository extends JpaRepository<Ban, Long> {
+    @Transactional
+    @Modifying
+    @Query("update ban b set b.reason = ?1, b.expiresAt = ?2 where b.id = ?3")
+    int updateReasonAndExpiresAtById(String reason, Date expiresAt, Long id);
 }

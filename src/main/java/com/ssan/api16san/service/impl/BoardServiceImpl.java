@@ -23,16 +23,23 @@ public class BoardServiceImpl implements BoardService {
         return boardResource;
     }
 
+    @Override
     public List<BoardResource> getAll() {
         return MAPPER.toBoardResourceList(boardRepository.findAll());
     }
 
+    @Override
     public BoardResource get(Long id) {
         return MAPPER.toBoardResource(boardRepository.findById(id).orElseThrow());
     }
 
-
+    @Override
     public void delete(Long id) {
         boardRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(BoardResource boardResource) {
+        boardRepository.updateNameAndDescriptionById(boardResource.getName(), boardResource.getDescription(), boardResource.getId());
     }
 }

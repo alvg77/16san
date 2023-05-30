@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -16,6 +17,6 @@ public class DiscussionThreadRequestResource {
     private Long id;
     private String title;
     private String content;
-    private LocalDateTime validUntil;
+    private Date validUntil;
     private String boardName;
 }

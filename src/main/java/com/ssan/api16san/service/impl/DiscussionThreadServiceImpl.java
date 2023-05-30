@@ -18,6 +18,7 @@ import java.util.Map;
 public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     private final DiscussionThreadRepository discussionThreadRepository;
 
+    @Override
     public DiscussionThreadResponseResource save(DiscussionThreadRequestResource threadRequestResource) {
         DiscussionThread discussionThread = discussionThreadRepository.save(
                 MAPPER.fromDiscussionThreadRequestResource(threadRequestResource)
@@ -25,19 +26,32 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
         return MAPPER.toDiscussionThreadResponseResource(discussionThread);
     }
 
+    @Override
     public DiscussionThreadResponseResource get(Long id) {
         return MAPPER.toDiscussionThreadResponseResource(
                 discussionThreadRepository.findById(id).orElseThrow()
         );
     }
 
+    @Override
     public List<DiscussionThreadResponseResource> getAll() {
         return MAPPER.toDiscussionThreadResponseResourceList(
                 discussionThreadRepository.findAll()
         );
     }
 
+    @Override
     public void delete(Long id) {
         discussionThreadRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(DiscussionThreadRequestResource threadRequestResource) {
+        discussionThreadRepository.updateTitleAndContentAndValidUntilById(
+                threadRequestResource.getTitle(),
+                threadRequestResource.getContent(),
+                threadRequestResource.getValidUntil(),
+                threadRequestResource.getId()
+        );
     }
 }
