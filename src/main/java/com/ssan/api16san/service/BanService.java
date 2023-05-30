@@ -8,7 +8,7 @@ import java.util.List;
 public interface BanService {
     BanResource save(BanResource banResource);
     List<BanResource> getAll();
-    BanResource get(Long id);
+    BanResource getById(Long id);
     void delete(Long id);
-    void update(BanResource banResource);
+    BanResource update(BanResource banResource, Long id);
 }

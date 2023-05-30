@@ -1,7 +1,7 @@
 package com.ssan.api16san.mapper;
 
-import com.ssan.api16san.controller.resources.AuthResponseResource;
-import com.ssan.api16san.controller.resources.RegisterRequestResource;
+import com.ssan.api16san.controller.resources.AuthResponse;
+import com.ssan.api16san.controller.resources.RegisterRequest;
 import com.ssan.api16san.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -11,6 +11,7 @@ public interface UserMapper {
 
     UserMapper MAPPER = Mappers.getMapper(UserMapper.class);
 
-    User fromRegisterRequestResource(RegisterRequestResource request);
-    AuthResponseResource toAuthResponseResource(User user);
+    User fromRegisterRequestResource(RegisterRequest request);
+    AuthResponse toAuthResponseResource(User user);
+
 }

@@ -1,16 +1,16 @@
 package com.ssan.api16san.service.impl;
 
 import com.ssan.api16san.config.JWTService;
-import com.ssan.api16san.controller.resources.AuthResponseResource;
-import com.ssan.api16san.controller.resources.LoginRequestResource;
-import com.ssan.api16san.controller.resources.LogoutRequestResource;
-import com.ssan.api16san.controller.resources.RegisterRequestResource;
+import com.ssan.api16san.controller.resources.AuthResponse;
+import com.ssan.api16san.controller.resources.LoginRequest;
+import com.ssan.api16san.controller.resources.RegisterRequest;
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.repository.UserRepository;
 import com.ssan.api16san.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,31 +25,36 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public AuthResponseResource login(LoginRequestResource request) {
+    public AuthResponse login(LoginRequest loginRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
                 )
         );
-        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        User user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
 
         String jwtToken = jwtService.generateToken(user);
-        AuthResponseResource authResponse =  MAPPER.toAuthResponseResource(userRepository.save(user));
+        AuthResponse authResponse = MAPPER.toAuthResponseResource(userRepository.save(user));
         authResponse.setJwt(jwtToken);
 
         return authResponse;
     }
 
     @Override
-    public AuthResponseResource register(RegisterRequestResource request) {
-        User user = MAPPER.fromRegisterRequestResource(request);
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+    public AuthResponse register(RegisterRequest registerRequest) {
+        User user = MAPPER.fromRegisterRequestResource(registerRequest);
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
         String jwtToken = jwtService.generateToken(user);
-        AuthResponseResource authResponse =  MAPPER.toAuthResponseResource(userRepository.save(user));
+        AuthResponse authResponse =  MAPPER.toAuthResponseResource(userRepository.save(user));
         authResponse.setJwt(jwtToken);
 
         return authResponse;
+    }
+
+    @Override
+    public User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

@@ -3,12 +3,15 @@ package com.ssan.api16san.controller.resources;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequestResource {
+public class AuthResponse {
     private String username;
-    private String password;
+    private String email;
+    private Date createdAt;
+    private String jwt;
 }

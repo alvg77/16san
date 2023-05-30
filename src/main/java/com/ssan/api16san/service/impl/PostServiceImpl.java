@@ -4,6 +4,7 @@ import com.ssan.api16san.controller.resources.PostResource;
 import com.ssan.api16san.entity.Post;
 import com.ssan.api16san.repository.PostRepository;
 import com.ssan.api16san.service.PostService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,7 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.save(
                 MAPPER.fromPostResource(postResource)
         );
-        postResource.setId(post.getId());
-        return postResource;
+        return MAPPER.toPostResource(post);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResource get(Long id) {
+    public PostResource getById(Long id) {
         return MAPPER.toPostResource(
                 postRepository.findById(id).orElseThrow()
         );
@@ -45,7 +45,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void update(PostResource postResource) {
-        postRepository.updateContentById(postResource.getContent(), postResource.getId());
+    public PostResource update(PostResource postResource, Long id) {
+        Post post = postRepository.getReferenceById(id);
+        if (post == null) {
+            throw new EntityNotFoundException("Cannot find post with the specified id.");
+        }
+        post.setContent(postResource.getContent());
+        return MAPPER.toPostResource(postRepository.save(post));
     }
 }

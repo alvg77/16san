@@ -8,6 +8,7 @@ import lombok.NonNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpvoteResource {
-    private Long postId;
+public class LoginRequest {
+    private String username;
+    private String password;
 }

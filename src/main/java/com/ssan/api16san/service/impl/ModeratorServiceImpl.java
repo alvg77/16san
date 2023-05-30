@@ -34,7 +34,7 @@ public class ModeratorServiceImpl implements ModeratorService {
     }
 
     @Override
-    public ModeratorResource get(Long id) {
+    public ModeratorResource getById(Long id) {
         return MAPPER.toModeratorResource(
                 moderatorRepository.findById(id).orElseThrow()
         );

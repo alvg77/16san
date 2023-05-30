@@ -8,7 +8,7 @@ import java.util.List;
 public interface BoardService {
     BoardResource save(BoardResource boardResource);
     List<BoardResource> getAll();
-    BoardResource get(Long id);
+    BoardResource getById(Long id);
     void delete(Long id);
-    void update(BoardResource boardResource);
+    BoardResource update(BoardResource boardResource, Long id);
 }

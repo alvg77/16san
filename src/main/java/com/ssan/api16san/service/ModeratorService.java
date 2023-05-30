@@ -7,6 +7,6 @@ import java.util.List;
 public interface ModeratorService {
     ModeratorResource save(ModeratorResource moderatorResource);
     List<ModeratorResource> getAll();
-    ModeratorResource get(Long id);
+    ModeratorResource getById(Long id);
     void delete(Long id);
 }

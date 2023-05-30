@@ -28,7 +28,7 @@ public class BanServiceImpl implements BanService {
     }
 
     @Override
-    public BanResource get(Long id) {
+    public BanResource getById(Long id) {
         return MAPPER.toBanResource(banRepository.findById(id).orElseThrow());
     }
 
@@ -37,12 +37,18 @@ public class BanServiceImpl implements BanService {
         banRepository.deleteById(id);
     }
 
+
     @Override
-    public void update(BanResource banResource) {
-        banRepository.updateReasonAndExpiresAtById(
-                banResource.getReason(),
-                banResource.getExpiresAt(),
-                banResource.getId()
-        );
+    public BanResource update(BanResource banResource, Long id) {
+        Ban ban = banRepository.getReferenceById(id);
+
+        if (ban == null) {
+            throw new EntityNotFoundException("Cannot find a ban with such id.");
+        }
+
+        ban.setReason(banResource.getReason());
+        ban.setExpiresAt(banResource.getExpiresAt());
+
+        return MAPPER.toBanResource(banRepository.save(ban));
     }
 }

@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiscussionThreadResponseResource {
+public class DiscussionThreadResponse {
     private Long id;
     private String title;
     private String content;

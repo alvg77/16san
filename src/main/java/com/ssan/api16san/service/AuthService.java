@@ -1,11 +1,13 @@
 package com.ssan.api16san.service;
 
-import com.ssan.api16san.controller.resources.AuthResponseResource;
-import com.ssan.api16san.controller.resources.LoginRequestResource;
-import com.ssan.api16san.controller.resources.LogoutRequestResource;
-import com.ssan.api16san.controller.resources.RegisterRequestResource;
+import com.ssan.api16san.controller.resources.AuthResponse;
+import com.ssan.api16san.controller.resources.LoginRequest;
+import com.ssan.api16san.controller.resources.RegisterRequest;
+import com.ssan.api16san.entity.User;
 
 public interface AuthService {
-    AuthResponseResource login(LoginRequestResource loginData);
-    AuthResponseResource register(RegisterRequestResource registerData);
+    AuthResponse login(LoginRequest loginRequest);
+    AuthResponse register(RegisterRequest registerRequest);
+
+    User getCurrentUser();
 }

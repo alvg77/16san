@@ -9,7 +9,7 @@ import java.util.List;
 public interface PostService {
     PostResource save(PostResource postResource);
     List<PostResource> getAll();
-    PostResource get(Long id);
+    PostResource getById(Long id);
     void delete(Long id);
-    void update(PostResource postResource);
+    PostResource update(PostResource postResource, Long id);
 }

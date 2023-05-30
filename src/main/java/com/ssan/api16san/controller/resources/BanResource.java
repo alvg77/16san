@@ -14,7 +14,6 @@ import java.util.Date;
 public class BanResource {
     private Long id;
     private Long username;
-    private Long boardName;
     private String reason;
     private Date expiresAt;
 }

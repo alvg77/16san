@@ -1,7 +1,7 @@
 package com.ssan.api16san.mapper;
 
-import com.ssan.api16san.controller.resources.DiscussionThreadRequestResource;
-import com.ssan.api16san.controller.resources.DiscussionThreadResponseResource;
+import com.ssan.api16san.controller.resources.DiscussionThreadRequest;
+import com.ssan.api16san.controller.resources.DiscussionThreadResponse;
 import com.ssan.api16san.entity.DiscussionThread;
 import com.ssan.api16san.entity.Post;
 import com.ssan.api16san.entity.Upvote;
@@ -17,18 +17,18 @@ public interface DiscussionThreadMapper {
     DiscussionThreadMapper MAPPER = Mappers.getMapper(DiscussionThreadMapper.class);
 
     @Mapping(target = "board.name", source = "boardName")
-    DiscussionThread fromDiscussionThreadRequestResource(DiscussionThreadRequestResource discussionThreadRequestResource);
+    DiscussionThread fromDiscussionThreadRequestResource(DiscussionThreadRequest discussionThreadRequestResource);
 
     @Mapping(target = "creatorName", source = "user.username")
     @Mapping(target = "boardName", source = "board.name")
     @Mapping(target = "postCount", expression = "java(getPostCount(discussionThread.getPosts()))")
-    DiscussionThreadResponseResource toDiscussionThreadResponseResource(DiscussionThread discussionThread);
+    DiscussionThreadResponse toDiscussionThreadResponseResource(DiscussionThread discussionThread);
 
     default Integer getPostCount(List<Post> postList) {
         return postList.size();
     }
 
-    List<DiscussionThreadResponseResource> toDiscussionThreadResponseResourceList(List<DiscussionThread> discussionThreadList);
+    List<DiscussionThreadResponse> toDiscussionThreadResponseResourceList(List<DiscussionThread> discussionThreadList);
 
 }
 
