@@ -8,5 +8,4 @@ import com.ssan.api16san.controller.resources.RegisterRequestResource;
 public interface AuthService {
     AuthResponseResource login(LoginRequestResource loginData);
     AuthResponseResource register(RegisterRequestResource registerData);
-    AuthResponseResource logout(LogoutRequestResource logoutData);
 }
