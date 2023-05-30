@@ -1,11 +1,15 @@
 package com.ssan.api16san.controller.resources;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BanResource {
     private Long id;
     private Long username;

@@ -1,14 +1,19 @@
 package com.ssan.api16san.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-@Entity(name="user") // maps this class to an sql table named "User"
+@Entity(name="user")
 @Data
+@RequiredArgsConstructor
 @Table(
         name = "user",
         uniqueConstraints = {
@@ -17,8 +22,8 @@ import java.util.List;
         }
 )
 public class User {
-    @Id // marks this field as the primary key for the table
-    @GeneratedValue // tells the database to generate this value
+    @Id
+    @GeneratedValue
     @Column(
             name = "id",
             updatable = false,
@@ -50,28 +55,30 @@ public class User {
     @Column(
             name = "created_at",
             nullable = false,
-            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+            columnDefinition = "DATETIME DEFAULT NOW()"
     )
-    private Instant createdAt;
+    private Date createdAt;
 
-    @OneToMany(mappedBy = "user") // which field in the Post class maps to this field
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) // which field in the Post class maps to this field
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DiscussionThread> discussionThreads;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Moderator> moderators;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ban> bans;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Upvote> upvotes;
 
     @ManyToMany
-    @JoinTable(name = "user_community_boards",
-            joinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(
+            name = "user_community_boards",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
     private List<Board> boards = new ArrayList<>();
 
 }

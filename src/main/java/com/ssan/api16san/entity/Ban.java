@@ -2,12 +2,16 @@ package com.ssan.api16san.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity(name = "ban")
 @Data
+@RequiredArgsConstructor
 public class Ban {
     @Id
     @GeneratedValue
@@ -23,13 +27,13 @@ public class Ban {
         nullable = false,
         columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     )
-    private Instant createdAt;
+    private Date createdAt;
 
     @Column(
         name = "expires_at",
         columnDefinition = "DATETIME"
     )
-    private LocalDateTime expiresAt;
+    private Date expiresAt;
 
     @Column(
         name = "reason",
@@ -38,11 +42,11 @@ public class Ban {
     )
     private String reason;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "board_id")
     private Board board;
 }

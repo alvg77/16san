@@ -2,9 +2,12 @@ package com.ssan.api16san.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity(name = "moderator")
 @Data
+@RequiredArgsConstructor
 public class Moderator {
     @Id
     @GeneratedValue
@@ -15,11 +18,11 @@ public class Moderator {
     )
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "board_id")
     private Board board;
 

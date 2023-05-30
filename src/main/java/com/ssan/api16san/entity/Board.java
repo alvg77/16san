@@ -3,12 +3,16 @@ package com.ssan.api16san.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name="board")
 @Data
+@RequiredArgsConstructor
 @Table(
         name = "board",
         uniqueConstraints = {
@@ -42,17 +46,17 @@ public class Board {
     @Column(
             name = "created_at",
             nullable = false,
-            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+            columnDefinition = "DATETIME DEFAULT NOW()"
     )
-    private Instant createdAt;
+    private Date createdAt;
 
     @OneToMany(mappedBy = "board")
     private List<Moderator> moderators;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DiscussionThread> threads;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ban> bans;
 
     @ManyToMany(
@@ -63,6 +67,5 @@ public class Board {
             },
             mappedBy = "boards"
     )
-    @JsonIgnore
     private List<User> users;
 }
