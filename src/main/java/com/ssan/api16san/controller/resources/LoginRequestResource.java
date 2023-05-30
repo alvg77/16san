@@ -9,6 +9,6 @@ import lombok.NonNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequestResource {
-    private String email;
+    private String username;
     private String password;
 }

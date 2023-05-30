@@ -23,8 +23,6 @@ public class UpvoteServiceImpl implements UpvoteService {
     public UpvoteResource save(UpvoteResource upvoteResource) {
         Post post = postRepository.findById(upvoteResource.getPostId()).orElseThrow();
 
-
-        // to be changed after adding auth
         return null;
     }
 
