@@ -17,13 +17,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     private final DiscussionThreadRepository discussionThreadRepository;
-
+    private final AuthServiceImpl authService;
     @Override
     public DiscussionThreadResponse save(DiscussionThreadRequest threadRequest) {
-        DiscussionThread discussionThread = discussionThreadRepository.save(
-                MAPPER.fromDiscussionThreadRequestResource(threadRequest)
-        );
-        return MAPPER.toDiscussionThreadResponseResource(discussionThread);
+        DiscussionThread discussionThread = MAPPER.fromDiscussionThreadRequestResource(threadRequest);
+        discussionThread.setUser(authService.getCurrentUser());
+        return MAPPER.toDiscussionThreadResponseResource(discussionThreadRepository.save(discussionThread));
     }
 
     @Override
@@ -48,6 +47,7 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     @Override
     public DiscussionThreadResponse update(DiscussionThreadRequest threadRequest, Long id) {
         DiscussionThread discussionThread = discussionThreadRepository.getReferenceById(id);
+
         if (discussionThread == null) {
             throw new EntityNotFoundException("Cannot find discussion thread with the specified id.");
         }

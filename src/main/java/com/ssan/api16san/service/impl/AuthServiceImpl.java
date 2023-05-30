@@ -1,6 +1,5 @@
 package com.ssan.api16san.service.impl;
 
-import com.ssan.api16san.config.JWTService;
 import com.ssan.api16san.controller.resources.AuthResponse;
 import com.ssan.api16san.controller.resources.LoginRequest;
 import com.ssan.api16san.controller.resources.RegisterRequest;
@@ -14,14 +13,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.ssan.api16san.mapper.UserMapper.MAPPER;
+import static com.ssan.api16san.mapper.AuthMapper.MAPPER;
 
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JWTService jwtService;
+    private final JWTServiceImpl jwtServiceImpl;
     private final AuthenticationManager authenticationManager;
 
     @Override
@@ -34,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
         );
         User user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
 
-        String jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtServiceImpl.generateToken(user);
         AuthResponse authResponse = MAPPER.toAuthResponseResource(userRepository.save(user));
         authResponse.setJwt(jwtToken);
 
@@ -46,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
         User user = MAPPER.fromRegisterRequestResource(registerRequest);
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
-        String jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtServiceImpl.generateToken(user);
         AuthResponse authResponse =  MAPPER.toAuthResponseResource(userRepository.save(user));
         authResponse.setJwt(jwtToken);
 

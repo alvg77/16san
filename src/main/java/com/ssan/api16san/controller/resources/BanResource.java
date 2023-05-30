@@ -13,7 +13,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class BanResource {
     private Long id;
-    private Long username;
+    private String username;
+    private String boardName;
     private String reason;
     private Date expiresAt;
 }

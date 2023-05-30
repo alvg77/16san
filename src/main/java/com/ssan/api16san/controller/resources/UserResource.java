@@ -3,15 +3,15 @@ package com.ssan.api16san.controller.resources;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardResource {
+public class UserResource {
     private Long id;
-    private String name;
-    private String description;
-    private Integer numberOfThreads;
-    private Integer numberOfUsers;
+    private String username;
+    private String email;
+    private Date createdAt;
 }

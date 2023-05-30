@@ -5,6 +5,7 @@ import com.ssan.api16san.entity.Moderator;
 import com.ssan.api16san.mapper.ModeratorMapper;
 import com.ssan.api16san.repository.ModeratorRepository;
 import com.ssan.api16san.service.ModeratorService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,9 @@ public class ModeratorServiceImpl implements ModeratorService {
     @Override
     public ModeratorResource getById(Long id) {
         return MAPPER.toModeratorResource(
-                moderatorRepository.findById(id).orElseThrow()
+                moderatorRepository.findById(id).orElseThrow(
+                        () -> new EntityNotFoundException("No moderator role found with the specified id.")
+                )
         );
     }
 

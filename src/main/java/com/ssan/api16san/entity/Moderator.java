@@ -1,15 +1,13 @@
 package com.ssan.api16san.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Entity(name = "moderator")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Moderator {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

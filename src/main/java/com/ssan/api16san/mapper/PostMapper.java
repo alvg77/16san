@@ -21,7 +21,6 @@ public interface PostMapper {
     PostResource toPostResource(Post post);
 
     @Mapping(target = "discussionThread.id", source = "threadId")
-    @Mapping(target = "user.username", source = "creatorName")
     Post fromPostResource(PostResource postResource);
 
     default Integer getUpvoteCount(List<Upvote> upvoteList) {

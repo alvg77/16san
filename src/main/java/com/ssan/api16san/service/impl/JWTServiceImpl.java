@@ -1,5 +1,6 @@
-package com.ssan.api16san.config;
+package com.ssan.api16san.service.impl;
 
+import com.ssan.api16san.service.JWTService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,27 +13,30 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 @Service
-public class JWTService {
+public class JWTServiceImpl implements JWTService {
 
     private static final String SECRET_KEY = "6150645367566B5970337336763979244226452948404D6251655468576D5A7134743777217A25432A462D4A614E645266556A586E3272357538782F413F4428";
 
+    @Override
     public String extractUsername(String jwt) {
         return extractClaim(jwt, Claims::getSubject);
     }
 
+    @Override
     public <T> T extractClaim(String jwt, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(jwt);
         return claimsResolver.apply(claims);
     }
 
+    @Override
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
+    @Override
     public String generateToken(Map<String, Object> extractClaims, UserDetails userDetails) {
         return Jwts.builder()
                 .setClaims(extractClaims)
@@ -43,6 +47,7 @@ public class JWTService {
                 .compact();
     }
 
+    @Override
     public boolean isTokenValid(String jwt, UserDetails userDetails) {
         final String username = extractUsername(jwt);
         return (username.equals(userDetails.getUsername())) && isTokenExpired(jwt);
