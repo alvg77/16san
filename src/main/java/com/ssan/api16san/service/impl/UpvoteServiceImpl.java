@@ -1,5 +1,6 @@
 package com.ssan.api16san.service.impl;
 
+import com.ssan.api16san.controller.resources.UpvoteResource;
 import com.ssan.api16san.entity.Post;
 import com.ssan.api16san.entity.Upvote;
 import com.ssan.api16san.entity.User;
@@ -10,7 +11,6 @@ import com.ssan.api16san.service.UpvoteService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,9 +23,9 @@ public class UpvoteServiceImpl implements UpvoteService {
     private final UserRepository userRepository;
     private final AuthServiceImpl authService;
 
-    public void save(Long postId) {
+    public void save(UpvoteResource upvoteResource) {
         User user = authService.getCurrentUser();
-        Optional<Post> post = Optional.of(postRepository.getReferenceById(postId));
+        Optional<Post> post = Optional.of(postRepository.getReferenceById(upvoteResource.getPostId()));
 
         if (post.isEmpty()) {
             throw new EntityNotFoundException("Cannot find post with the specified id.");
@@ -48,8 +48,8 @@ public class UpvoteServiceImpl implements UpvoteService {
         upvoteRepository.save(upvote);
     }
 
-    public void delete(Long postId) {
-        Optional<Post> post = Optional.of(postRepository.getReferenceById(postId));
+    public void delete(UpvoteResource upvoteResource) {
+        Optional<Post> post = Optional.of(postRepository.getReferenceById(upvoteResource.getPostId()));
         upvoteRepository.deleteByPostAndUser(
             post.orElseThrow(
                 () -> new EntityNotFoundException("Cannot find post with the specified id.")
