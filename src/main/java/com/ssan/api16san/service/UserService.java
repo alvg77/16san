@@ -8,6 +8,6 @@ import java.util.List;
 public interface UserService {
     UserResource getById(Long id);
     List<UserResource> getAll();
-    public UserResource update(UserResource userResource);
-    void delete();
+    public UserResource update(UserResource userResource, User currentUser);
+    void delete(Long id);
 }

@@ -36,19 +36,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResource update(UserResource userResource) {
-        User current = authService.getCurrentUser();
-
-        current.setUsername(userResource.getUsername());
-        current.setEmail(userResource.getEmail());
-
+    public UserResource update(UserResource userResource, User currentUser) {
+        currentUser.setUsername(userResource.getUsername());
+        currentUser.setEmail(userResource.getEmail());
         return MAPPER.toUserResource(
-                userRepository.save(current)
+                userRepository.save(currentUser)
         );
     }
 
     @Override
-    public void delete() {
-        userRepository.delete(authService.getCurrentUser());
+    public void delete(Long id) {
+        userRepository.deleteById(id);
     }
 }

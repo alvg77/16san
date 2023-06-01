@@ -3,6 +3,7 @@ package com.ssan.api16san.service.impl;
 import com.ssan.api16san.controller.resources.DiscussionThreadRequest;
 import com.ssan.api16san.controller.resources.DiscussionThreadResponse;
 import com.ssan.api16san.entity.DiscussionThread;
+import com.ssan.api16san.entity.User;
 import com.ssan.api16san.repository.DiscussionThreadRepository;
 import com.ssan.api16san.service.DiscussionThreadService;
 import static com.ssan.api16san.mapper.DiscussionThreadMapper.MAPPER;
@@ -17,11 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     private final DiscussionThreadRepository discussionThreadRepository;
-    private final AuthServiceImpl authService;
     @Override
-    public DiscussionThreadResponse save(DiscussionThreadRequest threadRequest) {
+    public DiscussionThreadResponse save(DiscussionThreadRequest threadRequest, User currentUser) {
         DiscussionThread discussionThread = MAPPER.fromDiscussionThreadRequestResource(threadRequest);
-        discussionThread.setUser(authService.getCurrentUser());
+        discussionThread.setUser(currentUser);
         return MAPPER.toDiscussionThreadResponseResource(discussionThreadRepository.save(discussionThread));
     }
 
@@ -40,12 +40,20 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(User currentUser, Long id) {
+        // add a check if the user is the owner of the post
         discussionThreadRepository.deleteById(id);
     }
 
     @Override
-    public DiscussionThreadResponse update(DiscussionThreadRequest threadRequest, Long id) {
+    public boolean userIdThreadCreator(User user, Long threadId) {
+        return false;
+    }
+
+    // method for checking if user is creator of thread
+
+    @Override
+    public DiscussionThreadResponse update(DiscussionThreadRequest threadRequest, User currentUser, Long id) {
         DiscussionThread discussionThread = discussionThreadRepository.getReferenceById(id);
 
         if (discussionThread == null) {
@@ -58,4 +66,6 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
 
         return MAPPER.toDiscussionThreadResponseResource(discussionThreadRepository.save(discussionThread));
     }
+
+
 }

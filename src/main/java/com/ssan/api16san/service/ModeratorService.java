@@ -1,5 +1,6 @@
 package com.ssan.api16san.service;
 
+import com.ssan.api16san.controller.resources.BoardResource;
 import com.ssan.api16san.controller.resources.ModeratorResource;
 
 import java.util.List;

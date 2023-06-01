@@ -3,6 +3,7 @@ package com.ssan.api16san.service.impl;
 import com.ssan.api16san.controller.resources.BoardResource;
 import com.ssan.api16san.entity.Board;
 import com.ssan.api16san.entity.Moderator;
+import com.ssan.api16san.entity.User;
 import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.repository.ModeratorRepository;
 import com.ssan.api16san.service.BoardService;
@@ -22,15 +23,15 @@ public class BoardServiceImpl implements BoardService {
     private final ModeratorRepository moderatorRepository;
 
     @Override
-    public BoardResource save(BoardResource boardResource) {
+    public BoardResource save(BoardResource boardResource, User currentUser) {
         Board boardEntity = boardRepository.save(MAPPER.fromBoardResource(boardResource));
 
         moderatorRepository.save(
                 new Moderator()
-                .builder()
-                .board(boardEntity)
-                .user(authService.getCurrentUser())
-                .build()
+                        .builder()
+                        .board(boardEntity)
+                        .user(currentUser)
+                        .build()
         );
 
         boardResource.setId(boardEntity.getId());
@@ -48,16 +49,25 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public boolean userHasModeratorRole(User user, Long boardId) {
+        return moderatorRepository.findByUser_IdAndBoard_Id(user.getId(), boardId).isEmpty() ? false : true;
+    }
+
+    @Override
     public void delete(Long id) {
         boardRepository.deleteById(id);
     }
 
     @Override
-    public BoardResource update(BoardResource boardResource, Long id) {
-        Board board = boardRepository.getReferenceById(id);
+    public BoardResource update(BoardResource boardResource, User user, Long boardId) {
+        Board board = boardRepository.getReferenceById(boardId);
 
         if (board == null) {
             throw new EntityNotFoundException("Cannot find a board with the specified id.");
+        }
+
+        if (!userHasModeratorRole(user, boardId)) {
+            // throw Exception
         }
 
         board.setDescription(boardResource.getDescription());
