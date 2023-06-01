@@ -1,7 +1,6 @@
 package com.ssan.api16san.controller;
 
 import com.ssan.api16san.controller.resources.BoardResource;
-import com.ssan.api16san.entity.Board;
 import com.ssan.api16san.service.AuthService;
 import com.ssan.api16san.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
-import java.security.PrivilegedActionException;
 
 @Controller
 @RequestMapping("/api/v1/boards")
