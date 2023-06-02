@@ -10,7 +10,6 @@ public interface BoardService {
     BoardResource save(BoardResource boardResource, User currentUser);
     List<BoardResource> getAll();
     BoardResource getById(Long id);
-    boolean userHasModeratorRole(User user, Long boardId);
-    void delete(Long id);
-    BoardResource update(BoardResource boardResource, User user, Long boardId);
+    void delete(User currentUser, Long id);
+    BoardResource update(BoardResource boardResource, User currentUser, Long boardId);
 }

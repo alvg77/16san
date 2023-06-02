@@ -11,6 +11,6 @@ public interface DiscussionThreadService {
     List<DiscussionThreadResponse> getAll();
     DiscussionThreadResponse getById(Long id);
     void delete(User currentUser, Long id);
-    boolean userIdThreadCreator(User user, Long threadId);
+    boolean userIsThreadCreator(Long userId, Long threadId);
     DiscussionThreadResponse update(DiscussionThreadRequest threadRequest, User currentUser, Long id);
 }

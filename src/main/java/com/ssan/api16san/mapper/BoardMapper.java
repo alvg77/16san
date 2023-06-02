@@ -21,6 +21,7 @@ public interface BoardMapper {
 
     @Mapping(target = "numberOfThreads", expression = "java(getNumberOfThreads(board.getThreads()))")
     @Mapping(target = "numberOfUsers", expression = "java(getNumberOfUsers(board.getUsers()))")
+    @Mapping(target = "createdAt", source = "createdAt")
     BoardResource toBoardResource(Board board);
     Board fromBoardResource(BoardResource boardResource);
 

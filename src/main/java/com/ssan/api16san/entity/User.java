@@ -47,14 +47,14 @@ public class User implements UserDetails {
     @Column(
             name = "email",
             nullable = false,
-            columnDefinition = "VARCHAR(250)"
+            columnDefinition = "VARCHAR(80)"
     )
     private String email;
 
     @Column(
             name = "password",
             nullable = false,
-            columnDefinition = "VARCHAR(45)"
+            columnDefinition = "VARCHAR(200)"
     )
     private String password;
 

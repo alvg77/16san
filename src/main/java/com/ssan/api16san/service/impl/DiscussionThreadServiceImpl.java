@@ -12,6 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +23,8 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     public DiscussionThreadResponse save(DiscussionThreadRequest threadRequest, User currentUser) {
         DiscussionThread discussionThread = MAPPER.fromDiscussionThreadRequestResource(threadRequest);
         discussionThread.setUser(currentUser);
+        discussionThread.setCreatedAt(new Date());
+
         return MAPPER.toDiscussionThreadResponseResource(discussionThreadRepository.save(discussionThread));
     }
 
@@ -41,16 +44,16 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
 
     @Override
     public void delete(User currentUser, Long id) {
-        // add a check if the user is the owner of the post
+        if (!userIsThreadCreator(currentUser.getId(), id)) {
+            throw new RuntimeException("User is not thread creator!");
+        }
         discussionThreadRepository.deleteById(id);
     }
 
     @Override
-    public boolean userIdThreadCreator(User user, Long threadId) {
-        return false;
+    public boolean userIsThreadCreator(Long userId, Long threadId) {
+        return discussionThreadRepository.findByUser_IdAndId(userId, threadId).isPresent();
     }
-
-    // method for checking if user is creator of thread
 
     @Override
     public DiscussionThreadResponse update(DiscussionThreadRequest threadRequest, User currentUser, Long id) {
@@ -58,6 +61,8 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
 
         if (discussionThread == null) {
             throw new EntityNotFoundException("Cannot find discussion thread with the specified id.");
+        } else if (!userIsThreadCreator(currentUser.getId(), id)) {
+            throw new RuntimeException("User is not thread creator");
         }
 
         discussionThread.setTitle(threadRequest.getTitle());

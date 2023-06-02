@@ -14,8 +14,5 @@ import java.util.Optional;
 
 @Repository
 public interface DiscussionThreadRepository extends JpaRepository<DiscussionThread, Long> {
-    @Transactional
-    @Modifying
-    @Query("update discussion_thread d set d.title = ?1, d.content = ?2, d.validUntil = ?3 where d.id = ?4")
-    int updateTitleAndContentAndValidUntilById(String title, String content, Date validUntil, Long id);
+    Optional<DiscussionThread> findByUser_IdAndId(Long id, Long id1);
 }

@@ -9,5 +9,6 @@ public interface ModeratorService {
     ModeratorResource save(ModeratorResource moderatorResource);
     List<ModeratorResource> getAll();
     ModeratorResource getById(Long id);
+    boolean userHasModeratorRole(Long userId, Long boardId);
     void delete(Long id);
 }

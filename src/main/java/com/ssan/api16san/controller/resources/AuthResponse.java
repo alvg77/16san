@@ -12,5 +12,6 @@ import java.util.Date;
 public class AuthResponse {
     private String username;
     private String email;
+    private Date createdAt;
     private String jwt;
 }

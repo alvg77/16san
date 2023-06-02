@@ -7,10 +7,12 @@ import com.ssan.api16san.entity.User;
 import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.repository.ModeratorRepository;
 import com.ssan.api16san.service.BoardService;
+import com.ssan.api16san.service.ModeratorService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.ssan.api16san.mapper.BoardMapper.MAPPER;
@@ -19,12 +21,14 @@ import static com.ssan.api16san.mapper.BoardMapper.MAPPER;
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
-    private final AuthServiceImpl authService;
     private final ModeratorRepository moderatorRepository;
+    private final ModeratorService moderatorService;
 
     @Override
     public BoardResource save(BoardResource boardResource, User currentUser) {
-        Board boardEntity = boardRepository.save(MAPPER.fromBoardResource(boardResource));
+        Board boardEntity = MAPPER.fromBoardResource(boardResource);
+        boardEntity.setCreatedAt(new Date());
+        boardEntity = boardRepository.save(boardEntity);
 
         moderatorRepository.save(
                 new Moderator()
@@ -35,6 +39,7 @@ public class BoardServiceImpl implements BoardService {
         );
 
         boardResource.setId(boardEntity.getId());
+        boardResource.setCreatedAt(boardEntity.getCreatedAt());
         return boardResource;
     }
 
@@ -49,25 +54,24 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean userHasModeratorRole(User user, Long boardId) {
-        return moderatorRepository.findByUser_IdAndBoard_Id(user.getId(), boardId).isEmpty() ? false : true;
-    }
-
-    @Override
-    public void delete(Long id) {
+    public void delete(User currentUser, Long id) {
+        if (!moderatorService.userHasModeratorRole(currentUser.getId(), id)) {
+            throw new RuntimeException("Current user is not moderator of board");
+        }
         boardRepository.deleteById(id);
     }
 
     @Override
-    public BoardResource update(BoardResource boardResource, User user, Long boardId) {
+    public BoardResource update(BoardResource boardResource, User currentUser, Long boardId) {
         Board board = boardRepository.getReferenceById(boardId);
 
         if (board == null) {
             throw new EntityNotFoundException("Cannot find a board with the specified id.");
         }
 
-        if (!userHasModeratorRole(user, boardId)) {
-            // throw Exception
+        if (!moderatorService.userHasModeratorRole(currentUser.getId(), boardId)) {
+            // change for custom exception
+            throw new RuntimeException("Current user is not moderator of board");
         }
 
         board.setDescription(boardResource.getDescription());
