@@ -48,6 +48,11 @@ public class ModeratorServiceImpl implements ModeratorService {
     }
 
     @Override
+    public boolean userHasModeratorRole(String username, String boardName) {
+        return moderatorRepository.findByUser_UsernameAndBoard_Name(username, boardName).isPresent();
+    }
+
+    @Override
     public void delete(Long id) {
         moderatorRepository.deleteById(id);
     }

@@ -22,7 +22,7 @@ public class DiscussionThreadController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable long id) {
+    public ResponseEntity<?> getById(@PathVariable long id) {
         return ResponseEntity.ok(threadService.getById(id));
     }
 

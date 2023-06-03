@@ -10,5 +10,6 @@ public interface ModeratorService {
     List<ModeratorResource> getAll();
     ModeratorResource getById(Long id);
     boolean userHasModeratorRole(Long userId, Long boardId);
+    boolean userHasModeratorRole(String username, String boardName);
     void delete(Long id);
 }

@@ -2,13 +2,14 @@ package com.ssan.api16san.service;
 
 import com.ssan.api16san.controller.resources.BanResource;
 import com.ssan.api16san.entity.Ban;
+import com.ssan.api16san.entity.User;
 
 import java.util.List;
 
 public interface BanService {
-    BanResource save(BanResource banResource);
-    List<BanResource> getAll();
+    BanResource save(BanResource banResource, User currentUser);
     BanResource getById(Long id);
-    void delete(Long id);
-    BanResource update(BanResource banResource, Long id);
+    void delete(User currentUser, Long id);
+    BanResource update(BanResource banResource, User currentUser, Long id);
+    List<Ban> getAllBansFromBoard(String boardName);
 }

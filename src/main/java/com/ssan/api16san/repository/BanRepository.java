@@ -9,10 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface BanRepository extends JpaRepository<Ban, Long> {
+    List<Ban> findByBoard_Name(String name);
     @Transactional
     @Modifying
     @Query("update ban b set b.reason = ?1, b.expiresAt = ?2 where b.id = ?3")

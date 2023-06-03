@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface ModeratorRepository extends JpaRepository<Moderator, Long> {
+    Optional<Moderator> findByUser_UsernameAndBoard_Name(String username, String name);
     Optional<Moderator> findByUser_IdAndBoard_Id(Long uId, Long bId);
 }

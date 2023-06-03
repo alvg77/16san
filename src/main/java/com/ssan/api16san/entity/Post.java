@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "post")
@@ -35,7 +36,7 @@ public class Post {
             nullable = false,
             columnDefinition = "DATETIME DEFAULT NOW()"
     )
-    private Instant createdAt;
+    private Date createdAt;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
