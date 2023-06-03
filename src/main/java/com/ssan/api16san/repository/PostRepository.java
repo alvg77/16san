@@ -13,5 +13,5 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long>{
-    List<Post> findAllByThread_Id(Long threadId);
+    List<Post> findByDiscussionThread_Id(Long id);
 }

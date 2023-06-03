@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
+    Board findByName(String name);
     @Transactional
     @Modifying
     @Query("update board b set b.name = ?1, b.description = ?2 where b.id = ?3")

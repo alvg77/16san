@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping("/api/v1/boards")
+@RequestMapping("/api/v1/bans")
 @RequiredArgsConstructor
 public class BanController {
     private final AuthService authService;

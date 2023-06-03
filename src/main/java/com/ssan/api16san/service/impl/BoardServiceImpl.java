@@ -28,6 +28,7 @@ public class BoardServiceImpl implements BoardService {
     public BoardResource save(BoardResource boardResource, User currentUser) {
         Board boardEntity = MAPPER.fromBoardResource(boardResource);
         boardEntity.setCreatedAt(new Date());
+        boardEntity.setCreator(currentUser);
         boardEntity = boardRepository.save(boardEntity);
 
         moderatorRepository.save(
@@ -55,8 +56,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void delete(User currentUser, Long id) {
-        if (!moderatorService.userHasModeratorRole(currentUser.getId(), id)) {
-            throw new RuntimeException("Current user is not moderator of board");
+        Board board = boardRepository.getReferenceById(id);
+        if (board != null && board.getCreator().getId() == currentUser.getId()) {
+            throw new RuntimeException("User is not creator of board!");
         }
         boardRepository.deleteById(id);
     }

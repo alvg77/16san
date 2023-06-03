@@ -52,6 +52,9 @@ public class Board {
     )
     private Date createdAt;
 
+    @OneToOne(mappedBy = "board")
+    private User creator;
+
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Moderator> moderators;
 
@@ -60,14 +63,4 @@ public class Board {
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ban> bans;
-
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "boards"
-    )
-    private List<User> users;
 }

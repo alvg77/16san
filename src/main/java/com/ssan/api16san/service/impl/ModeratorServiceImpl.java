@@ -2,6 +2,8 @@ package com.ssan.api16san.service.impl;
 
 import com.ssan.api16san.controller.resources.ModeratorResource;
 import com.ssan.api16san.entity.Moderator;
+import com.ssan.api16san.entity.User;
+import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.repository.ModeratorRepository;
 import com.ssan.api16san.service.ModeratorService;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,9 +18,14 @@ import static com.ssan.api16san.mapper.ModeratorMapper.MAPPER;
 @RequiredArgsConstructor
 public class ModeratorServiceImpl implements ModeratorService {
     private final ModeratorRepository moderatorRepository;
+    private final BoardRepository boardRepository;
 
     @Override
-    public ModeratorResource save(ModeratorResource moderatorResource) {
+    public ModeratorResource save(ModeratorResource moderatorResource, User currentUser) {
+        if (boardRepository.findByName(moderatorResource.getBoardName()).getCreator().getId() != currentUser.getId()) {
+            throw new RuntimeException("User is not creator of board!");
+        }
+
         Moderator moderator = moderatorRepository.save(
                 MAPPER.fromModeratorResource(moderatorResource)
         );
@@ -27,9 +34,9 @@ public class ModeratorServiceImpl implements ModeratorService {
     }
 
     @Override
-    public List<ModeratorResource> getAll() {
+    public List<ModeratorResource> getAllModeratorsFromBoard(Long boardId) {
         return MAPPER.toModeratorResourceList(
-                moderatorRepository.findAll()
+                moderatorRepository.findByBoard_Id(boardId)
         );
     }
 
@@ -53,7 +60,13 @@ public class ModeratorServiceImpl implements ModeratorService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(User currentUser, Long id) {
+        Moderator moderator = moderatorRepository.getReferenceById(id);
+
+        if (moderator.getBoard().getCreator().getId() != currentUser.getId()) {
+            throw new RuntimeException("User is not board creator!");
+        }
+
         moderatorRepository.deleteById(id);
     }
 

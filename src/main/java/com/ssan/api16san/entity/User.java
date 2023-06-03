@@ -80,12 +80,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Upvote> upvotes;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_community_boards",
-            joinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<Board> boards = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "board_id")
+    private Board board;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
