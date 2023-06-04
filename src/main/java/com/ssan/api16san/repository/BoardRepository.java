@@ -7,13 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    Board findByName(String name);
-    @Transactional
-    @Modifying
-    @Query("update board b set b.name = ?1, b.description = ?2 where b.id = ?3")
-    int updateNameAndDescriptionById(String name, String description, Long id);
+    Optional<Board> findByName(String name);
 }

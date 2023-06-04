@@ -8,7 +8,6 @@ import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.repository.ModeratorRepository;
 import com.ssan.api16san.service.BoardService;
 import com.ssan.api16san.service.ModeratorService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class BoardServiceImpl implements BoardService {
         boardEntity = boardRepository.save(boardEntity);
 
         moderatorRepository.save(
-                new Moderator()
+                Moderator
                         .builder()
                         .board(boardEntity)
                         .user(currentUser)
@@ -57,7 +56,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void delete(User currentUser, Long id) {
         Board board = boardRepository.getReferenceById(id);
-        if (board.getCreator().getId() == currentUser.getId()) {
+        if (board.getCreator().getId().equals(currentUser.getId())) {
             throw new RuntimeException("User is not creator of board!");
         }
         boardRepository.deleteById(id);

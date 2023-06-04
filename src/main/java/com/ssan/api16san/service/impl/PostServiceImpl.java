@@ -3,12 +3,9 @@ package com.ssan.api16san.service.impl;
 import com.ssan.api16san.controller.resources.PostResource;
 import com.ssan.api16san.entity.Post;
 import com.ssan.api16san.entity.User;
-import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.repository.PostRepository;
-import com.ssan.api16san.service.BoardService;
 import com.ssan.api16san.service.ModeratorService;
 import com.ssan.api16san.service.PostService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +43,7 @@ public class PostServiceImpl implements PostService {
 
         if (
                 !moderatorService.userHasModeratorRole(currentUser.getId(), post.getId()) &&
-                (post.getUser().getId() != currentUser.getId())
+                (!post.getUser().getId().equals(currentUser.getId()))
         ) {
             throw new IllegalArgumentException("User does not own post");
         }
@@ -57,7 +54,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResource update(PostResource postResource, User currentUser, Long id) {
         Post post = postRepository.getReferenceById(id);
-        if (post.getUser().getId() == currentUser.getId()) {
+        if (post.getUser().getId().equals(currentUser.getId())) {
             throw new RuntimeException("Cannot update a post that you do not own!");
         }
         post.setContent(postResource.getContent());

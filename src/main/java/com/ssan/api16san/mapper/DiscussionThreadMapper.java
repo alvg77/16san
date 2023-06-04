@@ -4,8 +4,6 @@ import com.ssan.api16san.controller.resources.DiscussionThreadRequest;
 import com.ssan.api16san.controller.resources.DiscussionThreadResponse;
 import com.ssan.api16san.entity.DiscussionThread;
 import com.ssan.api16san.entity.Post;
-import com.ssan.api16san.entity.Upvote;
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

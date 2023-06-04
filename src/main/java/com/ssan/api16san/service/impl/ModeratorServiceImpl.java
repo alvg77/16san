@@ -22,13 +22,21 @@ public class ModeratorServiceImpl implements ModeratorService {
 
     @Override
     public ModeratorResource save(ModeratorResource moderatorResource, User currentUser) {
-        if (boardRepository.findByName(moderatorResource.getBoardName()).getCreator().getId() != currentUser.getId()) {
+        if (
+                !boardRepository.findByName(moderatorResource.getBoardName())
+                .orElseThrow(
+                        EntityNotFoundException::new
+                )
+                .getCreator()
+                .getId().equals(currentUser.getId())
+        ) {
             throw new RuntimeException("User is not creator of board!");
         }
 
         Moderator moderator = moderatorRepository.save(
                 MAPPER.fromModeratorResource(moderatorResource)
         );
+
         moderatorResource.setId(moderator.getId());
         return moderatorResource;
     }
@@ -61,7 +69,7 @@ public class ModeratorServiceImpl implements ModeratorService {
     public void delete(User currentUser, Long id) {
         Moderator moderator = moderatorRepository.getReferenceById(id);
 
-        if (moderator.getBoard().getCreator().getId() != currentUser.getId()) {
+        if (!moderator.getBoard().getCreator().getId().equals(currentUser.getId())) {
             throw new RuntimeException("User is not board creator!");
         }
 

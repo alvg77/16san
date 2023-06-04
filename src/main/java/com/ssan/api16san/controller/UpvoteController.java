@@ -1,7 +1,6 @@
 package com.ssan.api16san.controller;
 
 import com.ssan.api16san.controller.resources.UpvoteResource;
-import com.ssan.api16san.repository.UpvoteRepository;
 import com.ssan.api16san.service.AuthService;
 import com.ssan.api16san.service.UpvoteService;
 import lombok.RequiredArgsConstructor;

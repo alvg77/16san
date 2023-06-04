@@ -6,10 +6,8 @@ import static com.ssan.api16san.mapper.BanMapper.MAPPER;
 
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.repository.BanRepository;
-import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.service.BanService;
 import com.ssan.api16san.service.ModeratorService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,6 @@ import java.util.List;
 public class BanServiceImpl implements BanService {
     private final BanRepository banRepository;
     private final ModeratorService moderatorService;
-    private final BoardRepository boardRepository;
 
     @Override
     public BanResource save(BanResource banResource, User currentUser) {

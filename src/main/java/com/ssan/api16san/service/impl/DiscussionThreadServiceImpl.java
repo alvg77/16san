@@ -8,7 +8,6 @@ import com.ssan.api16san.repository.DiscussionThreadRepository;
 import com.ssan.api16san.service.DiscussionThreadService;
 import static com.ssan.api16san.mapper.DiscussionThreadMapper.MAPPER;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

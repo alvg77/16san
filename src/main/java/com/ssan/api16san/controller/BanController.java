@@ -1,12 +1,10 @@
 package com.ssan.api16san.controller;
 
 import com.ssan.api16san.controller.resources.BanResource;
-import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.service.AuthService;
 import com.ssan.api16san.service.BanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;

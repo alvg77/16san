@@ -6,7 +6,6 @@ import static com.ssan.api16san.mapper.UserMapper.MAPPER;
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.repository.UserRepository;
 import com.ssan.api16san.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 

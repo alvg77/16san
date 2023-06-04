@@ -3,7 +3,6 @@ package com.ssan.api16san.mapper;
 import com.ssan.api16san.controller.resources.PostResource;
 import com.ssan.api16san.entity.Post;
 import com.ssan.api16san.entity.Upvote;
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
