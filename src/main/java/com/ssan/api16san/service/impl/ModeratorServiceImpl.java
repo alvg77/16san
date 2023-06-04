@@ -43,9 +43,7 @@ public class ModeratorServiceImpl implements ModeratorService {
     @Override
     public ModeratorResource getById(Long id) {
         return MAPPER.toModeratorResource(
-                moderatorRepository.findById(id).orElseThrow(
-                        () -> new EntityNotFoundException("No moderator role found with the specified id.")
-                )
+                moderatorRepository.getReferenceById(id)
         );
     }
 

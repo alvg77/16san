@@ -21,14 +21,10 @@ public class UpvoteServiceImpl implements UpvoteService {
     private final PostRepository postRepository;
 
     public void save(UpvoteResource upvoteResource, User currentUser) {
-        Optional<Post> post = Optional.of(postRepository.getReferenceById(upvoteResource.getPostId()));
-
-        if (post.isEmpty()) {
-            throw new EntityNotFoundException("Cannot find post with the specified id.");
-        }
+        Post post = postRepository.getReferenceById(upvoteResource.getPostId());
 
         Optional<Upvote> upvoteByPostAndUser = upvoteRepository.findFirstByUserAndPostOrderByIdDesc(
-                currentUser, post.get()
+                currentUser, post
         );
 
         if (upvoteByPostAndUser.isPresent()) {
@@ -38,7 +34,7 @@ public class UpvoteServiceImpl implements UpvoteService {
         Upvote upvote = Upvote
                 .builder()
                 .user(currentUser)
-                .post(post.get())
+                .post(post)
                 .build();
 
         upvoteRepository.save(upvote);

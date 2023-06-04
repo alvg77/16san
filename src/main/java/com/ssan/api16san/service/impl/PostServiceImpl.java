@@ -36,9 +36,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResource getById(Long id) {
         return MAPPER.toPostResource(
-                postRepository.findById(id).orElseThrow(
-                        () -> new EntityNotFoundException("No post found with the specified id.")
-                )
+                postRepository.getReferenceById(id)
         );
     }
 
@@ -47,7 +45,6 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.getReferenceById(id);
 
         if (
-                post != null &&
                 !moderatorService.userHasModeratorRole(currentUser.getId(), post.getId()) &&
                 (post.getUser().getId() != currentUser.getId())
         ) {
@@ -59,8 +56,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResource update(PostResource postResource, User currentUser, Long id) {
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No post found with the specified id."));
+        Post post = postRepository.getReferenceById(id);
         if (post.getUser().getId() == currentUser.getId()) {
             throw new RuntimeException("Cannot update a post that you do not own!");
         }

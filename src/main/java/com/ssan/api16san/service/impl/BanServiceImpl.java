@@ -38,7 +38,7 @@ public class BanServiceImpl implements BanService {
 
     @Override
     public BanResource getById(Long id) {
-        return MAPPER.toBanResource(banRepository.findById(id).orElseThrow());
+        return MAPPER.toBanResource(banRepository.getReferenceById(id));
     }
 
     @Override
@@ -57,10 +57,6 @@ public class BanServiceImpl implements BanService {
         }
 
         Ban ban = banRepository.getReferenceById(id);
-
-        if (ban == null) {
-            throw new EntityNotFoundException("Cannot find a ban with such id.");
-        }
 
         ban.setReason(banResource.getReason());
         ban.setExpiresAt(banResource.getExpiresAt());

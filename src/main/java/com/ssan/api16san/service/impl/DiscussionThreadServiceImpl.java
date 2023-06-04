@@ -57,13 +57,11 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
 
     @Override
     public DiscussionThreadResponse update(DiscussionThreadRequest threadRequest, User currentUser, Long id) {
-        DiscussionThread discussionThread = discussionThreadRepository.getReferenceById(id);
-
-        if (discussionThread == null) {
-            throw new EntityNotFoundException("Cannot find discussion thread with the specified id.");
-        } else if (!userIsThreadCreator(currentUser.getId(), id)) {
+        if (!userIsThreadCreator(currentUser.getId(), id)) {
             throw new RuntimeException("User is not thread creator");
         }
+
+        DiscussionThread discussionThread = discussionThreadRepository.getReferenceById(id);
 
         discussionThread.setTitle(threadRequest.getTitle());
         discussionThread.setContent(threadRequest.getContent());

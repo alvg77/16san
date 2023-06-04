@@ -51,13 +51,13 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardResource getById(Long id) {
-        return MAPPER.toBoardResource(boardRepository.findById(id).orElseThrow());
+        return MAPPER.toBoardResource(boardRepository.getReferenceById(id));
     }
 
     @Override
     public void delete(User currentUser, Long id) {
         Board board = boardRepository.getReferenceById(id);
-        if (board != null && board.getCreator().getId() == currentUser.getId()) {
+        if (board.getCreator().getId() == currentUser.getId()) {
             throw new RuntimeException("User is not creator of board!");
         }
         boardRepository.deleteById(id);
@@ -66,10 +66,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardResource update(BoardResource boardResource, User currentUser, Long boardId) {
         Board board = boardRepository.getReferenceById(boardId);
-
-        if (board == null) {
-            throw new EntityNotFoundException("Cannot find a board with the specified id.");
-        }
 
         if (!moderatorService.userHasModeratorRole(currentUser.getId(), boardId)) {
             // change for custom exception
