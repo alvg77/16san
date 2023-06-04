@@ -75,9 +75,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Upvote> upvotes;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+    private List<Board> boards;
 
 
     @Override

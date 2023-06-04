@@ -49,7 +49,8 @@ public class Board {
     )
     private Date createdAt;
 
-    @OneToOne(mappedBy = "board")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User creator;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
