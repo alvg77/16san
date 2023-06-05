@@ -17,8 +17,8 @@ public class DiscussionThreadController {
     private final DiscussionThreadService threadService;
     private final AuthService authService;
     @GetMapping
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(threadService.getAll());
+    public ResponseEntity<?> getAll(@RequestParam("board_id") long id) {
+        return ResponseEntity.ok(threadService.getAllThreadsByBoardId(id));
     }
 
     @GetMapping("/{id}")

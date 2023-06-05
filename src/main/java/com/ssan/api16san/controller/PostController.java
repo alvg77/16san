@@ -16,9 +16,9 @@ public class PostController {
     private final AuthService authService;
     private final PostService postService;
 
-    @GetMapping(params = "threadId")
-    public ResponseEntity<?> getAllPostsFromThread(@RequestParam Long threadId) {
-        return ResponseEntity.ok(postService.getAllPostsFromThread(threadId));
+    @GetMapping
+    public ResponseEntity<?> getAllPostsFromThread(@RequestParam("thread_id") long id) {
+        return ResponseEntity.ok(postService.getAllPostsFromThread(id));
     }
 
     @GetMapping("/{id}")

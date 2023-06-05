@@ -23,7 +23,7 @@ public interface PostMapper {
     Post fromPostResource(PostResource postResource);
 
     default Integer getUpvoteCount(List<Upvote> upvoteList) {
-        return upvoteList.size();
+        return upvoteList != null ? upvoteList.size() : 0;
     }
 
     List<PostResource> toPostResourceList(List<Post> postList);

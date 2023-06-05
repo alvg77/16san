@@ -2,13 +2,16 @@ package com.ssan.api16san.service.impl;
 
 import com.ssan.api16san.controller.resources.DiscussionThreadRequest;
 import com.ssan.api16san.controller.resources.DiscussionThreadResponse;
+import com.ssan.api16san.entity.Board;
 import com.ssan.api16san.entity.DiscussionThread;
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.exceptions.UnauthorizedException;
+import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.repository.DiscussionThreadRepository;
 import com.ssan.api16san.service.DiscussionThreadService;
 import static com.ssan.api16san.mapper.DiscussionThreadMapper.MAPPER;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +22,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     private final DiscussionThreadRepository discussionThreadRepository;
+    private final BoardRepository boardRepository;
+
     @Override
     public DiscussionThreadResponse save(DiscussionThreadRequest threadRequest, User currentUser) {
+        Board board = boardRepository.findByName(threadRequest.getBoardName()).orElseThrow(
+                () -> new EntityNotFoundException("Board with such name does not exist")
+        );
+
         DiscussionThread discussionThread = MAPPER.fromDiscussionThreadRequestResource(threadRequest);
         discussionThread.setUser(currentUser);
         discussionThread.setCreatedAt(new Date());
-
+        discussionThread.setBoard(board);
+        
         return MAPPER.toDiscussionThreadResponseResource(discussionThreadRepository.save(discussionThread));
     }
 
@@ -36,9 +46,9 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     }
 
     @Override
-    public List<DiscussionThreadResponse> getAll() {
+    public List<DiscussionThreadResponse> getAllThreadsByBoardId(Long id) {
         return MAPPER.toDiscussionThreadResponseResourceList(
-                discussionThreadRepository.findAll()
+                discussionThreadRepository.findAllByBoard_Id(id)
         );
     }
 

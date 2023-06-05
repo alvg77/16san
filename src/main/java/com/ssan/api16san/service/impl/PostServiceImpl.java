@@ -1,12 +1,15 @@
 package com.ssan.api16san.service.impl;
 
 import com.ssan.api16san.controller.resources.PostResource;
+import com.ssan.api16san.entity.DiscussionThread;
 import com.ssan.api16san.entity.Post;
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.exceptions.UnauthorizedException;
+import com.ssan.api16san.repository.DiscussionThreadRepository;
 import com.ssan.api16san.repository.PostRepository;
 import com.ssan.api16san.service.ModeratorService;
 import com.ssan.api16san.service.PostService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +23,14 @@ import static com.ssan.api16san.mapper.PostMapper.MAPPER;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final ModeratorService moderatorService;
+    private final DiscussionThreadRepository discussionThreadRepository;
 
     @Override
     public PostResource save(PostResource postResource, User currentUser) {
+        discussionThreadRepository.findById(postResource.getThreadId()).orElseThrow(
+                () -> new EntityNotFoundException("No thread with such id exists!")
+        );
+
         Post post = MAPPER.fromPostResource(postResource);
         post.setUser(currentUser);
         post.setCreatedAt(new Date());

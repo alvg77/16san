@@ -23,7 +23,7 @@ public interface DiscussionThreadMapper {
     DiscussionThreadResponse toDiscussionThreadResponseResource(DiscussionThread discussionThread);
 
     default Integer getPostCount(List<Post> postList) {
-        return postList.size();
+        return postList != null ? postList.size() : 0;
     }
 
     List<DiscussionThreadResponse> toDiscussionThreadResponseResourceList(List<DiscussionThread> discussionThreadList);

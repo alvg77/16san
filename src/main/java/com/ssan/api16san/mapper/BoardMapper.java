@@ -21,7 +21,7 @@ public interface BoardMapper {
     Board fromBoardResource(BoardResource boardResource);
 
     default Integer getNumberOfThreads(List<DiscussionThread> threadList) {
-        return threadList.size();
+        return threadList != null ? threadList.size() : 0;
     }
 
     List<BoardResource> toBoardResourceList(List<Board> boardList);

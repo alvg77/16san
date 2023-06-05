@@ -10,17 +10,10 @@ import com.ssan.api16san.repository.ModeratorRepository;
 import com.ssan.api16san.service.BoardService;
 import com.ssan.api16san.service.ModeratorService;
 import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.HibernateException;
-import org.hibernate.dialect.lock.LockingStrategyException;
-import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.SQLNonTransientException;
 import java.util.Date;
 import java.util.List;
 
@@ -55,6 +48,8 @@ public class BoardServiceImpl implements BoardService {
 
         boardResource.setId(boardEntity.getId());
         boardResource.setCreatedAt(boardEntity.getCreatedAt());
+        boardResource.setNumberOfThreads(0);
+
         return boardResource;
     }
 

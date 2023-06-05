@@ -1,8 +1,11 @@
 package com.ssan.api16san.controller;
 
 import com.ssan.api16san.controller.resources.BanResource;
+import com.ssan.api16san.repository.BanRepository;
+import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.service.AuthService;
 import com.ssan.api16san.service.BanService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,9 +18,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class BanController {
     private final AuthService authService;
     private final BanService banService;
+    private final BanRepository banRepository;
+    private final BoardRepository boardRepository;
 
-    @GetMapping(params = "boardName")
-    public ResponseEntity<?> getAllBansByBoardName(@RequestParam String boardName) {
+    public ResponseEntity<?> getAllBansByBoardName(@RequestParam("board_name") String boardName) {
         return ResponseEntity.ok(banService.getAllBansFromBoard(boardName));
     }
 

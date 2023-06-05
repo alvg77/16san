@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DiscussionThreadService {
     DiscussionThreadResponse save(DiscussionThreadRequest threadRequest, User currentUser);
-    List<DiscussionThreadResponse> getAll();
+    List<DiscussionThreadResponse> getAllThreadsByBoardId(Long threadId);
     DiscussionThreadResponse getById(Long id);
     void delete(User currentUser, Long id);
     boolean userIsThreadCreator(Long userId, Long threadId);
