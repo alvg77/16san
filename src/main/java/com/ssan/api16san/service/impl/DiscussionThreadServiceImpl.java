@@ -6,8 +6,10 @@ import com.ssan.api16san.entity.Board;
 import com.ssan.api16san.entity.DiscussionThread;
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.exceptions.UnauthorizedException;
+import com.ssan.api16san.exceptions.UserBanException;
 import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.repository.DiscussionThreadRepository;
+import com.ssan.api16san.service.BanService;
 import com.ssan.api16san.service.DiscussionThreadService;
 import static com.ssan.api16san.mapper.DiscussionThreadMapper.MAPPER;
 
@@ -23,6 +25,7 @@ import java.util.List;
 public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     private final DiscussionThreadRepository discussionThreadRepository;
     private final BoardRepository boardRepository;
+    private final BanService banService;
 
     @Override
     public DiscussionThreadResponse save(DiscussionThreadRequest threadRequest, User currentUser) {
@@ -30,11 +33,15 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
                 () -> new EntityNotFoundException("Board with such name does not exist")
         );
 
+        if (banService.isUserBanned(currentUser, board)) {
+            throw new UserBanException("User is banned from this board!");
+        }
+
         DiscussionThread discussionThread = MAPPER.fromDiscussionThreadRequestResource(threadRequest);
         discussionThread.setUser(currentUser);
         discussionThread.setCreatedAt(new Date());
         discussionThread.setBoard(board);
-        
+
         return MAPPER.toDiscussionThreadResponseResource(discussionThreadRepository.save(discussionThread));
     }
 

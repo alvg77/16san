@@ -4,10 +4,12 @@ import com.ssan.api16san.controller.resources.BanResource;
 import com.ssan.api16san.entity.Ban;
 import static com.ssan.api16san.mapper.BanMapper.MAPPER;
 
+import com.ssan.api16san.entity.Board;
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.exceptions.UnauthorizedException;
 import com.ssan.api16san.repository.BanRepository;
 import com.ssan.api16san.repository.BoardRepository;
+import com.ssan.api16san.repository.UserRepository;
 import com.ssan.api16san.service.BanService;
 import com.ssan.api16san.service.ModeratorService;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,12 +25,17 @@ public class BanServiceImpl implements BanService {
     private final BanRepository banRepository;
     private final ModeratorService moderatorService;
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
     @Override
     public BanResource save(BanResource banResource, User currentUser) {
-        boardRepository.findByName(banResource.getBoardName()).orElseThrow(
+        Board board = boardRepository.findByName(banResource.getBoardName()).orElseThrow(
                 () -> new EntityNotFoundException("No board with such name!")
         );
+
+        if (board.getCreator().getUsername().equals(banResource.getUsername())) {
+            throw new UnauthorizedException("Cannot ban the creator of the board!");
+        }
 
         if (!moderatorService.userHasModeratorRole(currentUser.getUsername(), banResource.getBoardName())) {
             throw new UnauthorizedException("User must have moderator rights to ban users!");
@@ -39,6 +46,10 @@ public class BanServiceImpl implements BanService {
         banResource = MAPPER.toBanResource(banRepository.save(banEntity));
 
         return banResource;
+    }
+
+    public boolean isUserBanned(User user, Board board) {
+        return banRepository.findByUser_IdAndBoard_Id(user.getId(), board.getId()).isPresent();
     }
 
     @Override

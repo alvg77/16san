@@ -5,8 +5,10 @@ import com.ssan.api16san.entity.DiscussionThread;
 import com.ssan.api16san.entity.Post;
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.exceptions.UnauthorizedException;
+import com.ssan.api16san.exceptions.UserBanException;
 import com.ssan.api16san.repository.DiscussionThreadRepository;
 import com.ssan.api16san.repository.PostRepository;
+import com.ssan.api16san.service.BanService;
 import com.ssan.api16san.service.ModeratorService;
 import com.ssan.api16san.service.PostService;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,12 +26,16 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final ModeratorService moderatorService;
     private final DiscussionThreadRepository discussionThreadRepository;
-
+    private final BanService banService;
     @Override
     public PostResource save(PostResource postResource, User currentUser) {
-        discussionThreadRepository.findById(postResource.getThreadId()).orElseThrow(
+        DiscussionThread thread = discussionThreadRepository.findById(postResource.getThreadId()).orElseThrow(
                 () -> new EntityNotFoundException("No thread with such id exists!")
         );
+
+        if (banService.isUserBanned(currentUser, thread.getBoard())) {
+            throw new UserBanException("User is banned from this board!");
+        }
 
         Post post = MAPPER.fromPostResource(postResource);
         post.setUser(currentUser);

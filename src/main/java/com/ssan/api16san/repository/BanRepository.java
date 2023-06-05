@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BanRepository extends JpaRepository<Ban, Long> {
+    Optional<Ban> findByUser_IdAndBoard_Id(Long id, Long id1);
     List<Ban> findByBoard_Name(String name);
     @Transactional
     @Modifying
