@@ -6,11 +6,17 @@ import com.ssan.api16san.controller.resources.RegisterRequest;
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.repository.UserRepository;
 import com.ssan.api16san.service.AuthService;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,16 +34,18 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse login(LoginRequest loginRequest) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
-
-        User user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow(
-                EntityNotFoundException::new
-        );
+        User user;
+        try {
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()
+                    )
+            );
+            user = (User) auth.getPrincipal();
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Invalid username or password!");
+        }
 
         String jwtToken = jwtServiceImpl.generateToken(user);
         AuthResponse authResponse = MAPPER.toAuthResponseResource(userRepository.save(user));
@@ -54,7 +62,12 @@ public class AuthServiceImpl implements AuthService {
         user.setCreatedAt(new Date());
 
         String jwtToken = jwtServiceImpl.generateToken(user);
-        AuthResponse authResponse = MAPPER.toAuthResponseResource(userRepository.save(user));
+        AuthResponse authResponse;
+        try {
+            authResponse = MAPPER.toAuthResponseResource(userRepository.save(user));
+        } catch (DataIntegrityViolationException e) {
+            throw new EntityExistsException("User with such username/email already exists!");
+        }
         authResponse.setJwt(jwtToken);
 
         return authResponse;

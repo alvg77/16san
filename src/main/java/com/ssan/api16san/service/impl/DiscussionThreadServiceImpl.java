@@ -4,6 +4,7 @@ import com.ssan.api16san.controller.resources.DiscussionThreadRequest;
 import com.ssan.api16san.controller.resources.DiscussionThreadResponse;
 import com.ssan.api16san.entity.DiscussionThread;
 import com.ssan.api16san.entity.User;
+import com.ssan.api16san.exceptions.UnauthorizedException;
 import com.ssan.api16san.repository.DiscussionThreadRepository;
 import com.ssan.api16san.service.DiscussionThreadService;
 import static com.ssan.api16san.mapper.DiscussionThreadMapper.MAPPER;
@@ -44,7 +45,7 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     @Override
     public void delete(User currentUser, Long id) {
         if (!userIsThreadCreator(currentUser.getId(), id)) {
-            throw new RuntimeException("User is not thread creator!");
+            throw new UnauthorizedException("User is not thread creator!");
         }
         discussionThreadRepository.deleteById(id);
     }
@@ -57,7 +58,7 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     @Override
     public DiscussionThreadResponse update(DiscussionThreadRequest threadRequest, User currentUser, Long id) {
         if (!userIsThreadCreator(currentUser.getId(), id)) {
-            throw new RuntimeException("User is not thread creator");
+            throw new UnauthorizedException("User is not thread creator");
         }
 
         DiscussionThread discussionThread = discussionThreadRepository.getReferenceById(id);

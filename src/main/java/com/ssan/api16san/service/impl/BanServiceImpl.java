@@ -5,6 +5,7 @@ import com.ssan.api16san.entity.Ban;
 import static com.ssan.api16san.mapper.BanMapper.MAPPER;
 
 import com.ssan.api16san.entity.User;
+import com.ssan.api16san.exceptions.UnauthorizedException;
 import com.ssan.api16san.repository.BanRepository;
 import com.ssan.api16san.service.BanService;
 import com.ssan.api16san.service.ModeratorService;
@@ -23,7 +24,7 @@ public class BanServiceImpl implements BanService {
     @Override
     public BanResource save(BanResource banResource, User currentUser) {
         if (!moderatorService.userHasModeratorRole(currentUser.getUsername(), banResource.getBoardName())) {
-            throw new RuntimeException("User must have moderator rights to ban users!");
+            throw new UnauthorizedException("User must have moderator rights to ban users!");
         }
 
         Ban banEntity = MAPPER.fromBanResource(banResource);
@@ -42,7 +43,7 @@ public class BanServiceImpl implements BanService {
     public void delete(User currentUser, Long id) {
         Ban ban = banRepository.getReferenceById(id);
         if (!moderatorService.userHasModeratorRole(currentUser.getId(), ban.getBoard().getId())) {
-            throw new RuntimeException("User must have moderator rights to ban users!");
+            throw new UnauthorizedException("User must have moderator rights to ban users!");
         }
         banRepository.delete(ban);
     }
@@ -50,8 +51,9 @@ public class BanServiceImpl implements BanService {
     @Override
     public BanResource update(BanResource banResource, User currentUser, Long id) {
         if (!moderatorService.userHasModeratorRole(currentUser.getUsername(), banResource.getBoardName())) {
-            throw new RuntimeException("User must have moderator rights to ban users!");
+            throw new UnauthorizedException("User must have moderator rights to ban users!");
         }
+
 
         Ban ban = banRepository.getReferenceById(id);
 

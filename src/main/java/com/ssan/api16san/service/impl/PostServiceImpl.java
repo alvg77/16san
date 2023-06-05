@@ -3,6 +3,7 @@ package com.ssan.api16san.service.impl;
 import com.ssan.api16san.controller.resources.PostResource;
 import com.ssan.api16san.entity.Post;
 import com.ssan.api16san.entity.User;
+import com.ssan.api16san.exceptions.UnauthorizedException;
 import com.ssan.api16san.repository.PostRepository;
 import com.ssan.api16san.service.ModeratorService;
 import com.ssan.api16san.service.PostService;
@@ -55,7 +56,7 @@ public class PostServiceImpl implements PostService {
     public PostResource update(PostResource postResource, User currentUser, Long id) {
         Post post = postRepository.getReferenceById(id);
         if (post.getUser().getId().equals(currentUser.getId())) {
-            throw new RuntimeException("Cannot update a post that you do not own!");
+            throw new UnauthorizedException("Cannot update a post that you do not own!");
         }
         post.setContent(postResource.getContent());
         return MAPPER.toPostResource(postRepository.save(post));

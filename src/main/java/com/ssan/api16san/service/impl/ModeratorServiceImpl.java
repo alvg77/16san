@@ -3,6 +3,7 @@ package com.ssan.api16san.service.impl;
 import com.ssan.api16san.controller.resources.ModeratorResource;
 import com.ssan.api16san.entity.Moderator;
 import com.ssan.api16san.entity.User;
+import com.ssan.api16san.exceptions.UnauthorizedException;
 import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.repository.ModeratorRepository;
 import com.ssan.api16san.service.ModeratorService;
@@ -30,7 +31,7 @@ public class ModeratorServiceImpl implements ModeratorService {
                 .getCreator()
                 .getId().equals(currentUser.getId())
         ) {
-            throw new RuntimeException("User is not creator of board!");
+            throw new UnauthorizedException("User is not creator of board!");
         }
 
         Moderator moderator = moderatorRepository.save(
@@ -70,7 +71,7 @@ public class ModeratorServiceImpl implements ModeratorService {
         Moderator moderator = moderatorRepository.getReferenceById(id);
 
         if (!moderator.getBoard().getCreator().getId().equals(currentUser.getId())) {
-            throw new RuntimeException("User is not board creator!");
+            throw new UnauthorizedException("User is not board creator!");
         }
 
         moderatorRepository.deleteById(id);

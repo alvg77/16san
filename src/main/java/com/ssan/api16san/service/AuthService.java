@@ -8,6 +8,5 @@ import com.ssan.api16san.entity.User;
 public interface AuthService {
     AuthResponse login(LoginRequest loginRequest);
     AuthResponse register(RegisterRequest registerRequest);
-
     User getCurrentUser();
 }

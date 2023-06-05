@@ -15,5 +15,4 @@ public class BoardResource {
     private String description;
     private Date createdAt;
     private Integer numberOfThreads;
-    private Integer numberOfUsers;
 }
