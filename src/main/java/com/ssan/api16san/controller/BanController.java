@@ -20,6 +20,7 @@ public class BanController {
     private final AuthService authService;
     private final BanService banService;
 
+    @GetMapping
     public ResponseEntity<?> getAllBansByBoardName(@RequestParam("board_name") String boardName) {
         return ResponseEntity.ok(banService.getAllBansFromBoard(boardName));
     }

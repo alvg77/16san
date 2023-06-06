@@ -33,7 +33,11 @@ public class BanServiceImpl implements BanService {
                 () -> new EntityNotFoundException("No board with such name!")
         );
 
-        if (board.getCreator().getUsername().equals(banResource.getUsername())) {
+        User user = userRepository.findByUsername(banResource.getUsername()).orElseThrow(
+                () -> new EntityNotFoundException("No user with such username!")
+        );
+
+        if (board.getCreator().getId().equals(user.getId())) {
             throw new UnauthorizedException("Cannot ban the creator of the board!");
         }
 
@@ -43,6 +47,8 @@ public class BanServiceImpl implements BanService {
 
         Ban banEntity = MAPPER.fromBanResource(banResource);
         banEntity.setCreatedAt(new Date());
+        banEntity.setBoard(board);
+        banEntity.setUser(user);
         banResource = MAPPER.toBanResource(banRepository.save(banEntity));
 
         return banResource;
