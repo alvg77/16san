@@ -57,7 +57,7 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.getReferenceById(id);
 
         if (
-                !moderatorService.userHasModeratorRole(currentUser.getId(), post.getId()) &&
+                !moderatorService.userHasModeratorRole(currentUser, post.getDiscussionThread().getBoard()) &&
                 (!post.getUser().getId().equals(currentUser.getId()))
         ) {
             throw new IllegalArgumentException("User does not own post");
