@@ -3,6 +3,7 @@ package com.ssan.api16san.controller;
 import com.ssan.api16san.controller.resources.ModeratorResource;
 import com.ssan.api16san.service.AuthService;
 import com.ssan.api16san.service.ModeratorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class ModeratorController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ModeratorResource moderatorResource) {
+    public ResponseEntity<?> create(@Valid @RequestBody ModeratorResource moderatorResource) {
         ModeratorResource saved = moderatorService.save(moderatorResource, authService.getCurrentUser());
 
         return ResponseEntity.created(

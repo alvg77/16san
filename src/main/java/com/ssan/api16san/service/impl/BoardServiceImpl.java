@@ -29,6 +29,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardResource save(BoardResource boardResource, User currentUser) {
         Board boardEntity = MAPPER.fromBoardResource(boardResource);
+
         boardEntity.setCreatedAt(new Date());
         boardEntity.setCreator(currentUser);
 

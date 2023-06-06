@@ -2,6 +2,7 @@ package com.ssan.api16san.controller;
 
 import com.ssan.api16san.controller.resources.UserResource;
 import com.ssan.api16san.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 
 import com.ssan.api16san.service.AuthService;
@@ -27,13 +28,13 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody UserResource userResource) {
+    public ResponseEntity<?> update(@Valid @RequestBody UserResource userResource) {
         return ResponseEntity.ok(userService.update(userResource, authService.getCurrentUser()));
     }
 
     @DeleteMapping
     public ResponseEntity<?> delete() {
-        userService.delete(authService.getCurrentUser().getId());
+       userService.delete(authService.getCurrentUser().getId());
         return ResponseEntity.noContent().build();
     }
 }

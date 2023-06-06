@@ -3,6 +3,7 @@ package com.ssan.api16san.controller;
 import com.ssan.api16san.controller.resources.UpvoteResource;
 import com.ssan.api16san.service.AuthService;
 import com.ssan.api16san.service.UpvoteService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,13 +20,13 @@ public class UpvoteController {
     private final AuthService authService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody UpvoteResource upvoteResource) {
+    public ResponseEntity<?> create(@Valid @RequestBody UpvoteResource upvoteResource) {
         upvoteService.save(upvoteResource, authService.getCurrentUser());
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(params = "postId")
-    public ResponseEntity<?> create(long postId) {
+    public ResponseEntity<?> delete(long postId) {
         upvoteService.delete(postId, authService.getCurrentUser());
         return ResponseEntity.noContent().build();
     }

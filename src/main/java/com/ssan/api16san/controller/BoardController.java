@@ -3,6 +3,7 @@ package com.ssan.api16san.controller;
 import com.ssan.api16san.controller.resources.BoardResource;
 import com.ssan.api16san.service.AuthService;
 import com.ssan.api16san.service.BoardService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class BoardController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody BoardResource boardResource) {
+    public ResponseEntity<?> create(@Valid @RequestBody BoardResource boardResource) {
         BoardResource saved = boardService.save(boardResource, authService.getCurrentUser());
 
         return ResponseEntity.created(
@@ -38,7 +39,7 @@ public class BoardController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable long id,
-            @RequestBody BoardResource boardResource
+            @Valid @RequestBody BoardResource boardResource
     ) {
         return ResponseEntity.ok(boardService.update(boardResource, authService.getCurrentUser(), id));
     }

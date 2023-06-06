@@ -3,6 +3,7 @@ package com.ssan.api16san.controller;
 import com.ssan.api16san.controller.resources.PostResource;
 import com.ssan.api16san.service.AuthService;
 import com.ssan.api16san.service.PostService;
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody PostResource postResource) {
+    public ResponseEntity<?> create(@Valid @RequestBody PostResource postResource) {
         PostResource saved = postService.save(postResource, authService.getCurrentUser());
         return ResponseEntity.created(
                 UriComponentsBuilder.fromPath("/api/v1/posts/{id}").buildAndExpand(saved.getId()).toUri()
@@ -35,7 +36,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody PostResource postResource, @PathVariable long id) {
+    public ResponseEntity<?> update(@Valid @RequestBody PostResource postResource, @PathVariable long id) {
         return ResponseEntity.ok(postService.update(postResource, authService.getCurrentUser(), id));
     }
 
