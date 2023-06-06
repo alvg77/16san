@@ -37,7 +37,7 @@ public class BanServiceImpl implements BanService {
             throw new UnauthorizedException("Cannot ban the creator of the board!");
         }
 
-        if (!moderatorService.userHasModeratorRole(currentUser.getUsername(), banResource.getBoardName())) {
+        if (!moderatorService.userHasModeratorRole(currentUser, board)) {
             throw new UnauthorizedException("User must have moderator rights to ban users!");
         }
 
@@ -60,7 +60,7 @@ public class BanServiceImpl implements BanService {
     @Override
     public void delete(User currentUser, Long id) {
         Ban ban = banRepository.getReferenceById(id);
-        if (!moderatorService.userHasModeratorRole(currentUser.getId(), ban.getBoard().getId())) {
+        if (!moderatorService.userHasModeratorRole(currentUser, ban.getBoard())) {
             throw new UnauthorizedException("User must have moderator rights to ban users!");
         }
         banRepository.delete(ban);
@@ -68,7 +68,10 @@ public class BanServiceImpl implements BanService {
 
     @Override
     public BanResource update(BanResource banResource, User currentUser, Long id) {
-        if (!moderatorService.userHasModeratorRole(currentUser.getUsername(), banResource.getBoardName())) {
+        Board board = boardRepository.findByName(banResource.getBoardName()).orElseThrow(
+                () -> new EntityNotFoundException("Board does not exist!")
+        );
+        if (!moderatorService.userHasModeratorRole(currentUser, board)) {
             throw new UnauthorizedException("User must have moderator rights to ban users!");
         }
 

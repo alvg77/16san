@@ -10,6 +10,7 @@ import com.ssan.api16san.service.ModeratorService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.ssan.api16san.entity.Board;
 
 import java.util.List;
 
@@ -57,13 +58,8 @@ public class ModeratorServiceImpl implements ModeratorService {
     }
 
     @Override
-    public boolean userHasModeratorRole(Long userId, Long boardId) {
-        return moderatorRepository.findByUser_IdAndBoard_Id(userId, boardId).isPresent();
-    }
-
-    @Override
-    public boolean userHasModeratorRole(String username, String boardName) {
-        return moderatorRepository.findByUser_UsernameAndBoard_Name(username, boardName).isPresent();
+    public boolean userHasModeratorRole(User user, Board board) {
+        return moderatorRepository.findByUser_IdAndBoard_Id(user.getId(), board.getId()).isPresent();
     }
 
     @Override

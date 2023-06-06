@@ -77,7 +77,7 @@ public class BoardServiceImpl implements BoardService {
     public BoardResource update(BoardResource boardResource, User currentUser, Long boardId) {
         Board board = boardRepository.getReferenceById(boardId);
 
-        if (!moderatorService.userHasModeratorRole(currentUser.getId(), boardId)) {
+        if (!moderatorService.userHasModeratorRole(currentUser, board)) {
             throw new UnauthorizedException("Current user is not moderator of board");
         }
 
