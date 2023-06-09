@@ -14,9 +14,9 @@ public class PostResource {
     private Long id;
     @NotNull
     private String content;
-    @NotNull
     private String creatorName;
     private Date createdAt;
+    @NotNull
     private Long threadId;
     private Integer upvoteCount;
 }
