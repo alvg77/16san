@@ -84,6 +84,12 @@ public class BoardServiceImpl implements BoardService {
         board.setDescription(boardResource.getDescription());
         board.setName(boardResource.getName());
 
-        return MAPPER.toBoardResource(boardRepository.save(board));
+        try {
+            board = boardRepository.save(board);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntityExistsException("Duplicate names are not allowed!");
+        }
+
+        return MAPPER.toBoardResource(board);
     }
 }

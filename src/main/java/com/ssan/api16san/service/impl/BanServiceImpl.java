@@ -7,6 +7,7 @@ import static com.ssan.api16san.mapper.BanMapper.MAPPER;
 import com.ssan.api16san.entity.Board;
 import com.ssan.api16san.entity.User;
 import com.ssan.api16san.exceptions.UnauthorizedException;
+import com.ssan.api16san.exceptions.UserBanException;
 import com.ssan.api16san.repository.BanRepository;
 import com.ssan.api16san.repository.BoardRepository;
 import com.ssan.api16san.repository.UserRepository;
@@ -37,12 +38,16 @@ public class BanServiceImpl implements BanService {
                 () -> new EntityNotFoundException("No user with such username!")
         );
 
-        if (board.getCreator().getId().equals(user.getId())) {
-            throw new UnauthorizedException("Cannot ban the creator of the board!");
-        }
-
         if (!moderatorService.userHasModeratorRole(currentUser, board)) {
             throw new UnauthorizedException("User must have moderator rights to ban users!");
+        }
+
+        if (isUserBanned(user, board)) {
+            throw new UserBanException("User is already banned!");
+        }
+
+        if (board.getCreator().getId().equals(user.getId())) {
+            throw new UnauthorizedException("Cannot ban the creator of the board!");
         }
 
         Ban banEntity = MAPPER.fromBanResource(banResource);
