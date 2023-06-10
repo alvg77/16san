@@ -96,7 +96,8 @@ public class BanServiceImpl implements BanService {
     }
 
     @Override
-    public List<Ban> getAllBansFromBoard(String boardName) {
-        return banRepository.findByBoard_Name(boardName);
+    public List<BanResource> getAllBansFromBoard(long boardId) {
+        boardRepository.getReferenceById(boardId);
+        return MAPPER.toBanResourceList(banRepository.findByBoard_Id(boardId));
     }
 }

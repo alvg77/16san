@@ -21,8 +21,8 @@ public class BanController {
     private final BanService banService;
 
     @GetMapping
-    public ResponseEntity<?> getAllBansByBoardName(@RequestParam("board_name") String boardName) {
-        return ResponseEntity.ok(banService.getAllBansFromBoard(boardName));
+    public ResponseEntity<?> getAllBansByBoardName(@RequestParam("boardId") long boardId) {
+        return ResponseEntity.ok(banService.getAllBansFromBoard(boardId));
     }
 
     @GetMapping("/{id}")

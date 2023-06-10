@@ -13,5 +13,5 @@ public interface BanService {
     BanResource getById(Long id);
     void delete(User currentUser, Long id);
     BanResource update(BanResource banResource, User currentUser, Long id);
-    List<Ban> getAllBansFromBoard(String boardName);
+    List<BanResource> getAllBansFromBoard(long boardId);
 }

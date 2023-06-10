@@ -78,6 +78,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostResource> getAllPostsFromThread(Long threadId) {
+        discussionThreadRepository.getReferenceById(threadId);
         return MAPPER.toPostResourceList(
                 postRepository.findByDiscussionThread_Id(threadId)
         );

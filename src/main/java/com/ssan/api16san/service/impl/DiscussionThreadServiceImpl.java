@@ -54,6 +54,7 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
 
     @Override
     public List<DiscussionThreadResponse> getAllThreadsByBoardId(Long id) {
+        boardRepository.getReferenceById(id);
         return MAPPER.toDiscussionThreadResponseResourceList(
                 discussionThreadRepository.findAllByBoard_Id(id)
         );

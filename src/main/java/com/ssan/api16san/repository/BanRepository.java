@@ -13,10 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface BanRepository extends JpaRepository<Ban, Long> {
+    List<Ban> findByBoard_Id(Long id);
     Optional<Ban> findByUser_IdAndBoard_Id(Long id, Long id1);
-    List<Ban> findByBoard_Name(String name);
-    @Transactional
-    @Modifying
-    @Query("update ban b set b.reason = ?1, b.expiresAt = ?2 where b.id = ?3")
-    int updateReasonAndExpiresAtById(String reason, Date expiresAt, Long id);
 }

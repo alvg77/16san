@@ -63,11 +63,13 @@ public class AuthServiceImpl implements AuthService {
 
         String jwtToken = jwtServiceImpl.generateToken(user);
         AuthResponse authResponse;
+
         try {
             authResponse = MAPPER.toAuthResponseResource(userRepository.save(user));
         } catch (DataIntegrityViolationException e) {
             throw new EntityExistsException("User with such username/email already exists!");
         }
+
         authResponse.setJwt(jwtToken);
 
         return authResponse;
