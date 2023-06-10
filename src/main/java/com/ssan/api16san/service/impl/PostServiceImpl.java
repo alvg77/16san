@@ -78,7 +78,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostResource> getAllPostsFromThread(Long threadId) {
-        discussionThreadRepository.getReferenceById(threadId);
+        discussionThreadRepository.findById(threadId).orElseThrow(
+                () -> new EntityNotFoundException("Cannot find thread with such id!")
+        );
         return MAPPER.toPostResourceList(
                 postRepository.findByDiscussionThread_Id(threadId)
         );

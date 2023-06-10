@@ -97,7 +97,9 @@ public class BanServiceImpl implements BanService {
 
     @Override
     public List<BanResource> getAllBansFromBoard(long boardId) {
-        boardRepository.getReferenceById(boardId);
+        boardRepository.findById(boardId).orElseThrow(
+                () -> new EntityNotFoundException("Cannot find board with such id!")
+        );
         return MAPPER.toBanResourceList(banRepository.findByBoard_Id(boardId));
     }
 }

@@ -45,6 +45,9 @@ public class ModeratorServiceImpl implements ModeratorService {
 
     @Override
     public List<ModeratorResource> getAllModeratorsFromBoard(Long boardId) {
+        boardRepository.findById(boardId).orElseThrow(
+                () -> new EntityNotFoundException("Board with such id not found!")
+        );
         return MAPPER.toModeratorResourceList(
                 moderatorRepository.findByBoard_Id(boardId)
         );

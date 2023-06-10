@@ -53,10 +53,12 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
     }
 
     @Override
-    public List<DiscussionThreadResponse> getAllThreadsByBoardId(Long id) {
-        boardRepository.getReferenceById(id);
+    public List<DiscussionThreadResponse> getAllThreadsByBoardId(Long boardId) {
+        boardRepository.findById(boardId).orElseThrow(
+                () -> new EntityNotFoundException("No board with such id")
+        );
         return MAPPER.toDiscussionThreadResponseResourceList(
-                discussionThreadRepository.findAllByBoard_Id(id)
+                discussionThreadRepository.findAllByBoard_Id(boardId)
         );
     }
 
@@ -87,6 +89,4 @@ public class DiscussionThreadServiceImpl implements DiscussionThreadService {
 
         return MAPPER.toDiscussionThreadResponseResource(discussionThreadRepository.save(discussionThread));
     }
-
-
 }
