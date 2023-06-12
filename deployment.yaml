@@ -6,7 +6,7 @@ metadata:
     app: ssan
   name: ssan
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: ssan
@@ -32,12 +32,10 @@ metadata:
   name: ssan
 spec:
   ports:
-  - name: 8080-8080
-    port: 8080
-    protocol: TCP
-    targetPort: 8080
+    - name: 8080-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
   selector:
     app: ssan
-  type: ClusterIP
-status:
-  loadBalancer: {}
+  type: LoadBalancer
