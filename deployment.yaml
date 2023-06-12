@@ -17,6 +17,7 @@ spec:
       labels:
         app: ssan
     spec:
+      restartPolicy: Always
       containers:
       - image: alekovg/16san
         name: ssan
